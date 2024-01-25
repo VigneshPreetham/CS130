@@ -1,0 +1,26 @@
+name: Basic CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    # Placeholder for future backend setup
+    - name: Setup Backend Environment
+      run: echo "Backend setup will go here"
+
+    # Placeholder for future frontend setup
+    - name: Setup Frontend Environment
+      run: echo "Frontend setup will go here"
+
+    # Placeholder for future tests
+    - name: Run Tests
+      run: echo "Tests will go here"
