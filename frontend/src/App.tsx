@@ -2,24 +2,21 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import SignInPage from "./pages/sign-in/SignIn";
-
-// Create blank components for each route
-
-const SignUp = () => <div>Sign Up</div>;
-const Dashboard = () => <div>Dashboard</div>;
+import SignUpPage from "./pages/sign-up/SignUp";
+import UploadImagePage from "./pages/upload-image/UploadImagePage";
 
 function App() {
-    return (
-        <Router>
-            <div className="App">
-                <Routes>
-                    <Route path="/sign-in" element={<SignInPage />} />
-                    <Route path="/sign-up" element={<SignUp />} />
-                    <Route path="/dashboard" element={<Dashboard />} />
-                </Routes>
-            </div>
-        </Router>
-    );
+  return (
+    <Router>
+      <div className="App">
+        <Routes>
+          <Route path="/sign-in" element={<SignInPage />} />
+          <Route path="/sign-up" element={<SignUpPage />} />
+          <Route path="/upload" element={<UploadImagePage />} />
+        </Routes>
+      </div>
+    </Router>
+  );
 }
 
 export default App;
