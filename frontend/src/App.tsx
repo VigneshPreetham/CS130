@@ -1,7 +1,9 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
+import Header from "./pages/Header";
 import SignInPage from "./pages/sign-in/SignIn";
+import PicAndRecipe from "./pages/PicAndRecipe";
+import RecipesListPage from "./pages/RecipesListPage";
 
 // Create blank components for each route
 
@@ -12,10 +14,13 @@ function App() {
     return (
         <Router>
             <div className="App">
+                <Header></Header>
                 <Routes>
                     <Route path="/sign-in" element={<SignInPage />} />
                     <Route path="/sign-up" element={<SignUp />} />
                     <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/recipe/:id" element={<PicAndRecipe exampleParam={'2'}/>} />
+                    <Route path="/user/:id/recipes" element={<RecipesListPage></RecipesListPage>}/>
                 </Routes>
             </div>
         </Router>

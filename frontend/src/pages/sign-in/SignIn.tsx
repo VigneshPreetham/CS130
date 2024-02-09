@@ -3,10 +3,6 @@ import Logo from "../../assets/logo.png";
 export default function SignInPage() {
     return (
         <div className="h-screen w-screen flex items-center justify-center bg-gray-50">
-            <div className="absolute top-5 left-10 flex gap-3">
-                <img height="30px" width="40px" className="" src={Logo} alt="chef-hat" />
-                <span className="font-bold text-logo-red text-2xl">Taste Buds</span>
-            </div>
             <div className="bg-white w-[500px] rounded-lg flex flex-col px-6 py-20 lg:px-8 shadow-standard">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                     <h2 className="text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign in to your account</h2>
