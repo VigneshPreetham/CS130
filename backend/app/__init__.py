@@ -5,21 +5,32 @@ from flask_pymongo import PyMongo
 from .main.routes import main
 from .api.routes import api
 from .extensions import mongo
+from dotenv import load_dotenv
+
 import os
 
 
 def create_app():
     app = Flask(__name__)
    # app.config.from_object(DevelopmentConfig) # Use the config class
-    mongo_uri = os.environ.get('MONGO_URI')
-    if not mongo_uri:
-        raise RuntimeError("MONGO_URI is not set in the environment variables")
+    dotenv_path = os.path.join(os.path.dirname(__file__), '..', '..', '..' ,'.env')
+    load_dotenv(dotenv_path=dotenv_path)
 
+    mongo_uri = os.getenv("MONGO_URI")
     app.config["MONGO_URI"] = mongo_uri
     mongo.init_app(app)
 
     app.register_blueprint(main)
     app.register_blueprint(api, url_prefix='/api')
+
+    # if not mongo_uri:
+    #     raise RuntimeError("MONGO_URI is not set in the environment variables")
+
+    # app.config["MONGO_URI"] = mongo_uri
+    # mongo.init_app(app)
+
+    # app.register_blueprint(main)
+    # app.register_blueprint(api, url_prefix='/api')
 
     return app
 
