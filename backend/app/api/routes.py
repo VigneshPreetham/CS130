@@ -39,16 +39,15 @@ def signup():
     db = mongo.cx['savor']
     users_collection = db['users']
     data = request.get_json()
-    username = data.get('username')
+    email = data.get('email')
     password = data.get('password')
     user_id = str(uuid.uuid4())
-    if not username or not password:
-        return jsonify({"error": "Missing username or password"}), 400
+    
 
 
     hashed_password = generate_password_hash(password)
 
-    result = users_collection.insert_one({"id:": user_id, "username": username, "password": hashed_password})
+    result = users_collection.insert_one({"id:": user_id, "email": email, "password": hashed_password})
 
     return jsonify({"message": "User created successfully"}), 201
 
