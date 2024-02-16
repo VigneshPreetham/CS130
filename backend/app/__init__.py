@@ -6,12 +6,15 @@ from .main.routes import main
 from .api.routes import api
 from .extensions import mongo
 from dotenv import load_dotenv
+from flask_cors import CORS
 
 import os
 
 
 def create_app():
     app = Flask(__name__)
+    CORS(app)
+
    # app.config.from_object(DevelopmentConfig) # Use the config class
     dotenv_path = os.path.join(os.path.dirname(__file__), '..', '..', '..' ,'.env')
     load_dotenv(dotenv_path=dotenv_path)
