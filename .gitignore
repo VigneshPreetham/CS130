@@ -8,3 +8,6 @@ __pycache__/
 test.py
 test_connection.py
 package-lock.json
+bin/
+lib/
+pyvenv.cfg
