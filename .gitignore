@@ -11,3 +11,4 @@ package-lock.json
 bin/
 lib/
 pyvenv.cfg
+**/venv
