@@ -1,14 +1,17 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, current_app
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash
-from ..extensions import mongo
 import os
 import uuid
+
+from ..extensions import mongo
+from ..utils.mongodb import MongoDBUserCollection
 
 api = Blueprint('api', __name__)
 
 UPLOAD_FOLDER = os.path.join(os.path.dirname(__file__), '../../uploads')
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
 
 
 if not os.path.exists(UPLOAD_FOLDER):
@@ -36,20 +39,44 @@ def upload_file():
 
 @api.route('/signup', methods=['POST'])
 def signup():
-    db = mongo.cx['savor']
-    users_collection = db['users']
+
     data = request.get_json()
     email = data.get('email')
+    username = data.get('username')
     password = data.get('password')
     user_id = str(uuid.uuid4())
     
 
 
     hashed_password = generate_password_hash(password)
+    result = current_app.mongodb_user.signup_user(email, username, password)
 
-    result = users_collection.insert_one({"id:": user_id, "email": email, "password": hashed_password})
+    if result is not None:
+        return jsonify({"message": "User created successfully"}), 201
+    else:
+        return jsonify({"message": "Email taken"}), 201
 
-    return jsonify({"message": "User created successfully"}), 201
+@api.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    email = data.get('email')
+    password = data.get('password')
+
+    result = current_app.mongodb_user.login_user(email, password)
+    if result is not None:
+        email = result['email']
+        return jsonify({"message": f"User logged in successfully with {email}"}), 201
+    else:
+        return jsonify({"message": "User failed to login"}), 201
+
+
+
+
+
+
+
+
+
 
 
     
