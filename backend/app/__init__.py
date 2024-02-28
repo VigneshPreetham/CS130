@@ -6,7 +6,7 @@ from .api.routes import api
 from .extensions import mongo
 from dotenv import load_dotenv
 from flask_cors import CORS
-from .utils.mongodb import MongoDBUserCollection
+from .utils.database import MongoDBUserCollection
 
 import os
 

@@ -4,6 +4,7 @@ from pymongo import MongoClient
 import uuid
 import os
 from datetime import datetime
+import boto3
 
 
 
@@ -52,6 +53,19 @@ class MongoDBUserCollection:
         uuids = [match['id'] for match in matches]
         return uuids
 
+
+class AmazonS3DB:
+    def __init__(self):
+        self.aws_access_key_id = None ####TODO
+        self.aws_secret_access_key = None ###TODO
+        self.s3 = boto3.client('s3', aws_access_key_id=self.aws_access_key_id, aws_secret_access_key=self.aws_secret_access_key)
+
+
+    def upload_to_s3(self, file, filename):
+        bucket_name = 'your-bucket-name'
+        s3.upload_fileobj(file, bucket_name, filename)
+        file_url = f"https://{bucket_name}.s3.amazonaws.com/{filename}"
+        return file_url
 
     
 
