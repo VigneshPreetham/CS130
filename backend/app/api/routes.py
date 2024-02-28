@@ -5,7 +5,7 @@ import os
 import uuid
 
 from ..extensions import mongo
-from ..utils.mongodb import MongoDBUserCollection
+from ..utils.database import MongoDBUserCollection
 
 api = Blueprint('api', __name__)
 
