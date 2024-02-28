@@ -69,6 +69,14 @@ def login():
     else:
         return jsonify({"message": "User failed to login"}), 201
 
+@api.route('/search_user', methods=['GET'])
+def search_user():
+    query= request.args.get('user', '')
+    username_list = current_app.mongodb_user.search_usernames(query)
+    result = {"usernames": username_list}
+    return jsonify(result), 201
+    
+
 
 
 
