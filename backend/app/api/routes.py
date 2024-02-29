@@ -23,7 +23,7 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@api.route('/uploadrecipe', methods=['POST'])
+@api.route('/upload_recipe', methods=['POST'])
 def upload_recipe():
     data = request.get_json()
     # Check if the post request has the neccesary recipe data
@@ -78,7 +78,7 @@ def upload_photo_to_s3(file):
     # after upload file to s3 bucket, return filename of the uploaded file
     return filename
 
-@api.route('/addrecipe', methods=['POST'])
+@api.route('/add_recipe', methods=['POST'])
 def add_recipe():
     data = request.get_json()
     # Check if the post request has the neccesary recipe data
