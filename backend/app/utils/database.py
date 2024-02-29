@@ -52,7 +52,14 @@ class MongoDBUserCollection:
 
         uuids = [match['id'] for match in matches]
         return uuids
+    
+    def add_recipe_to_user(self, user_id, recipe_id):
+        query = {"user_id": user_id}
+        update = { "$push" : { "recipes" : recipe_id} }
 
+        result = self.users_collection.update_one(query, update)
+    
+        return result
 
 class AmazonS3DB:
     def __init__(self):

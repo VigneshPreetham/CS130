@@ -87,19 +87,19 @@ def add_recipe():
     if 'recipe_id' not in data:
         return jsonify({'message': 'No recipe_id'}), 400
 
-    result = add_recipe_to_user(data.get("user_id"), data.get("recipe_id"))
+    result = current_app.mongodb_user.add_recipe_to_user(data.get("user_id"), data.get("recipe_id"))
 
     return jsonify({"message": "Recipe added to User successfully"}), 200
 
-def add_recipe_to_user(user_id, recipe_id):
-    db = mongo.cx['savor']
-    user_collection = db['users']
-    query = {"user_id": user_id}
-    update = { "$push" : { "recipes" : recipe_id} }
+@api.route('/get_recipes', methods=['GET'])
+def get_recipes():
 
-    result = user_collection.update_one(query, update)
-    
-    return result
+    data = request.get_json()
+    user_id = data.get('user_id')
+
+    recipes = current_app.mongodb_user.get_recipes(user_id)
+
+    return jsonify(recipes), 200
 
 
 @api.route('/signup', methods=['POST'])
