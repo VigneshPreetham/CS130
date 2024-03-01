@@ -16,12 +16,14 @@ from PIL import Image
 
 class Generator():
     def __init__(self, path=None):
-        self.model = torch.hub.load('NVIDIA/DeepLearningExamples:torchhub', 'nvidia_efficientnet_b4', pretrained=True)
-
-        self.transform = transforms.Compose([
-            transforms.Resize(640),
-            transforms.CenterCrop(640),
+        self.model = torch.hub.load('NVIDIA/DeepLearningExamples:torchhub', 'nvidia_efficientnet_b4', pretrained=False)
+        self.model.classifier.fc = nn.Linear(1792, 180)
+        self.transform =  transforms.Compose([
+            transforms.Resize(256),
+            transforms.CenterCrop(256),
             transforms.ToTensor(),
+            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+
         ])
         self.path = path
 

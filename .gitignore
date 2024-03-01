@@ -13,8 +13,10 @@ lib/
 pyvenv.cfg
 **/venv
 
-/home/daviddu/CS130/backend/food_id_model/datasets/
-/home/daviddu/CS130/backend/food_id_model/wandb/
+backend/food_id_model/datasets/
+
 
 *.pth
 checkpoints/
+
+backend/food_id_model/wandb/
