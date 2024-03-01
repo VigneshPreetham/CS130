@@ -6,6 +6,7 @@ from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
 
 
+
 from config import config
 from dataloader import DataLoader
 from tqdm import tqdm
@@ -14,9 +15,9 @@ import wandb
 
 class Trainer():
     def __init__(self):
-        self.model = torch.hub.load('pytorch/vision:v0.10.0', 'inception_v3', pretrained=True)
-        num_features = self.model.fc.in_features 
-        self.model.fc = torch.nn.Linear(num_features, 498)
+        self.model = torch.hub.load('NVIDIA/DeepLearningExamples:torchhub', 'nvidia_efficientnet_b4', pretrained=True)
+        self.model.classifier.fc = nn.Linear(1792, 180)
+
         
 
 
@@ -30,7 +31,7 @@ class Trainer():
         dataloader = DataLoader(config["data_path"], self.batch_size, False, 1)
         self.train_loader = dataloader.get_train_loader()
         self.test_loader = dataloader.get_test_loader()
-        self.lr_scheduler = torch.optim.lr_scheduler.StepLR(self.optimizer, step_size=1, gamma=0.1)
+        self.lr_scheduler = torch.optim.lr_scheduler.StepLR(self.optimizer, step_size=1, gamma=0.9)
 
         wandb.init(
             # set the wandb project where this run will be logged
@@ -53,7 +54,7 @@ class Trainer():
                 images = images.to("cuda")
                 labels = labels.to("cuda")
 
-                outputs = self.model(images).logits
+                outputs = self.model(images)
                 loss = self.criterion(outputs, labels)
 
                 self.optimizer.zero_grad()
@@ -64,7 +65,8 @@ class Trainer():
 
                 wandb.log({"loss": loss.item()})
 
-            torch.save(self.model.state_dict(), f'/home/daviddu/Documents/hw2/checkpoints/inception_{epoch}.pth')
+            torch.save(self.model.state_dict(), f'/home/daviddu/CS130/checkpoints/eff_{epoch}.pth')
+            self.test()
             self.lr_scheduler.step()
     
     def test(self):
@@ -72,10 +74,12 @@ class Trainer():
             correct = 0
             total = 0
             for (images, labels) in tqdm(self.test_loader):
+                
+        
                 images = images.to("cuda")
                 labels = labels.to("cuda")
 
-                outputs = self.model(images).logits
+                outputs = self.model(images)
         
                 _, predicted = torch.max(outputs.data, 1)
                 total += labels.size(0)
@@ -83,6 +87,7 @@ class Trainer():
                 del images, labels, outputs
             
             print(f"Accuracy: {100 * correct / total}")
+            wandb.log({"accuracy": 100 * correct / total})
     
     def load_model(self, path):
         self.model.load_state_dict(torch.load(path))
@@ -92,5 +97,6 @@ class Trainer():
 
 if __name__ == "__main__":
         trainer = Trainer()
-        trainer.load_model('/home/daviddu/Documents/hw2/checkpoints/inception_19.pth')
-        trainer.train(50)
+        
+        trainer.train(10)
+        #print(trainer.model)
