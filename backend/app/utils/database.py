@@ -30,8 +30,10 @@ class MongoDBUserCollection:
         formatted_now = now.strftime("%Y-%m-%d %H:%M:%S")
 
         self.users_collection.insert_one({"id": user_id, "email": email, "username": username, "password": hashed_password, "created_on": formatted_now})
-        return user_id
-    
+        user = self.users_collection.find_one({"email": email})
+
+        return user
+
     def login_user(self, email, password):
         user = self.users_collection.find_one({"email": email})
         if user and check_password_hash(user['password'], password):
