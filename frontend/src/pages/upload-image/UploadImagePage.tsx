@@ -25,10 +25,6 @@ export default function UploadImagePage() {
 
     return (
         <div className="flex flex-col min-h-screen">
-            <div className="absolute flex gap-3 top-5 left-10">
-                <img height="30px" width="40px" className="" src={Logo} alt="chef-hat" />
-                <span className="text-2xl font-bold text-logo-red">Taste Buds</span>
-            </div>
             <main className="flex flex-col items-center justify-start mt-[200px] flex-1 gap-4">
                 <div className="flex flex-col items-center gap-2">
                     <h1 className="text-3xl font-bold tracking-tight">Upload a food item to generate a recipe!</h1>
