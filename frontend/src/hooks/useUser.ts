@@ -9,7 +9,7 @@ interface UserStore {
 
 export const useUser = create<UserStore>((set) => ({
     userName: "",
-    loggedIn: true,
+    loggedIn: false,
     login: (userName: string) => set({ loggedIn: true, userName: userName }),
     logout: () => set({ loggedIn: false, userName: "" }),
 }));

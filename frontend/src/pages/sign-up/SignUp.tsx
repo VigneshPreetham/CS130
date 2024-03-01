@@ -1,36 +1,25 @@
 import { useState } from "react";
 
+import { signUp } from "../../api/api";
+
 export default function SignUpPage() {
     const [email, setEmail] = useState("");
+    const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const formData = new FormData(event.currentTarget); // Use FormData to capture form input
-        const email = formData.get("email");
-        const password = formData.get("password");
 
         try {
-            const response = await fetch("http://127.0.0.1:5000/api/signup", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ email, password }),
-            });
-
-            if (response.ok) {
-                // Handle success response
-                console.log("User signed up successfully");
-                // You might want to redirect the user or show a success message
-            } else {
-                // Handle errors or unsuccessful responses
-                console.error("Signup failed");
-            }
+            const user = await signUp(email, userName, password);
         } catch (error) {
-            console.error("Error during signup", error);
+            if (error instanceof Error) {
+                setErrorMessage(error.message);
+            } else {
+                setErrorMessage("An error occurred. Please try again later.");
+            }
         }
     };
 
@@ -54,6 +43,23 @@ export default function SignUpPage() {
                                     name="email"
                                     type="email"
                                     autoComplete="email"
+                                    required
+                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-logo-red sm:text-sm sm:leading-6"
+                                />
+                            </div>
+                        </div>
+                        <div>
+                            <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+                                Username
+                            </label>
+                            <div className="mt-2">
+                                <input
+                                    value={userName}
+                                    onChange={(e) => setUserName(e.target.value)}
+                                    id="username"
+                                    name="username"
+                                    type="text"
+                                    autoComplete="username"
                                     required
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-logo-red sm:text-sm sm:leading-6"
                                 />

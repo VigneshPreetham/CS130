@@ -1,7 +1,5 @@
 import axios from "axios";
 
-console.log(process.env.REACT_APP_SERVER_URL);
-
 export const api = axios.create({
     baseURL: process.env.REACT_APP_SERVER_URL + "/api",
 });
@@ -23,18 +21,41 @@ export async function uploadImage(file: File): Promise<string> {
     return response.data.message;
 }
 
-export async function signUp(email: string, userName: string, password: string): Promise<string> {
-    const response = await api.post<{ message: string }>("/signup", {
-        email,
-        userName,
-        password,
-    });
+export async function signUp(
+    email: string,
+    userName: string,
+    password: string
+): Promise<{
+    email: string;
+    username: string;
+}> {
+    const response = await api
+        .post<{ message: string }>(
+            "/signup",
+            JSON.stringify({
+                email,
+                userName,
+                password,
+            }),
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        )
+        .catch((error) => {
+            console.log(error);
+            return error.response.data;
+        });
 
-    if (response.status !== 200) {
-        throw new Error(response.data.message);
+    if (response.error) {
+        throw new Error(response.error);
     }
 
-    return response.data.message;
+    return {
+        email: response.data.email,
+        username: response.data.username,
+    };
 }
 
 export async function signIn(
@@ -44,13 +65,26 @@ export async function signIn(
     email: string;
     username: string;
 }> {
-    const response = await api.post<{ email: string; username: string; error: string }>("/login", {
-        email,
-        password,
-    });
+    const response = await api
+        .post<{ email: string; username: string; error: string }>(
+            "/login",
+            JSON.stringify({
+                email,
+                password,
+            }),
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        )
+        .catch((error) => {
+            return error.response.data;
+        });
 
-    if (response.status !== 200) {
-        throw new Error(response.data.error);
+    if (response.error) {
+        console.log(response.error);
+        throw new Error(response.error);
     }
 
     return {

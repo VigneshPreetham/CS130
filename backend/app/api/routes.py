@@ -50,9 +50,17 @@ def signup():
     result = current_app.mongodb_user.signup_user(email, username, password)
 
     if result is not None:
-        return jsonify({"message": "User created successfully"}), 200
+        return (
+            jsonify(
+                {"email": result["email"], "username": result["username"], "error": ""}
+            ),
+            200,
+        )
     else:
-        return jsonify({"message": "Email taken"}), 400
+        return (
+            jsonify({"email": "", "username": "", "error": "User failed to signup"}),
+            400,
+        )
 
 
 @api.route("/login", methods=["POST"])
