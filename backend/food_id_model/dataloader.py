@@ -22,14 +22,17 @@ class DataLoader():
 
 
         train_transform = transforms.Compose([
-            transforms.Resize(299),
-            transforms.CenterCrop(299),
+            transforms.Resize(256),
+            transforms.CenterCrop(256),
             transforms.ToTensor(),
+            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+
         ])
 
 
-        train_df = pd.read_csv(self.data_dir + '/train.csv')
-        train_dataset = FoodDataset(train_df, transform=train_transform)
+        #train_dataset = FoodDataset(train_df, transform=train_transform)
+
+        train_dataset = datasets.ImageFolder(root=self.data_dir + '/train', transform=train_transform)
 
         
         num_train = len(train_dataset)
@@ -56,13 +59,15 @@ class DataLoader():
 
 
         valid_transform = transforms.Compose([
-            transforms.Resize(299),
-            transforms.CenterCrop(299),
+            transforms.Resize(256),
+            transforms.CenterCrop(256),
             transforms.ToTensor(),
+            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+
         ])
 
-        valid_df = pd.read_csv(self.data_dir + '/val.csv')
-        valid_dataset = FoodDataset(valid_df, transform=valid_transform)
+        #valid_dataset = FoodDataset(valid_df, transform=valid_transform)
+        valid_dataset = datasets.ImageFolder(root=self.data_dir + '/val', transform=valid_transform)
 
 
         data_loader = torch.utils.data.DataLoader(

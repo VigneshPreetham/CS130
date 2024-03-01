@@ -1,0 +1,180 @@
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Apple pie/2323355.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Artichoke bottoms in olive oil/156.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Baby back ribs/3824491.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Baklava/3884435.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Banh mi/14_2.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Banh xeo/76_1.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Beef bourguignon/53_1.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Beef carpaccio/1682706.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Beef in oyster sauce/64006.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Beef tartare/3759536.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Beet salad/3371455.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Beignets/3477434.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Bibimbap/1881154.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Biryani/62_1.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Blanquette de veau/27_2.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Borek/748.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Bread pudding/917696.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Breakfast burrito/3501509.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Bruschetta/1233570.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Bun cha/27_2.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Butter chicken/8_2.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Caesar salad/2037494.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Cannoli/2806617.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Cao lau/98_1.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Caprese salad/2680784.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Carrot cake/1942306.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Ceviche/422885.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Cha ca/70_2.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Charcoal-boiled pork neck/201148.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Cheesecake/2711334.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Cheese plate/120285.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Chicken curry/3058581.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Chicken quesadilla/1856233.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Chicken wings/2595779.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Chilaquiles/66_2.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Chiles en nogada/85_1.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Chocolate cake/3155200.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Chocolate mousse/2020115.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Chole/27_2.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Chow mein/323410.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Churros/1644687.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Cig kofte/264.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Clam chowder/152255.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Club sandwich/3489716.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Coconut milk-flavored crepes with shrimp and beef/210830.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Coconut milk soup/256196.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Com tam/99_2.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Confit de canard/61_1.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Coq au vin/99_2.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Crab cakes/3794049.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Creme brulee/738026.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Croque madame/2023035.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Cup cakes/3471613.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Deviled eggs/3923077.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Donuts/130235.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Dumplings/1558167.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Edamame/488373.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Eggs benedict/1848972.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Enchiladas/71_2.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Escargots/794705.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Falafel/3491984.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Filet mignon/1766609.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Fish and chips/1659195.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Foie gras/3854220.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/French fries/109401.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/French onion soup/76514.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/French toast/2244097.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Fried calamari/1767636.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Fried mussel pancakes/308325.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Fried pork in scoop/170655.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Fried rice/341581.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Frozen yogurt/3539052.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Garlic bread/3684331.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Gnocchi/3355210.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Goya champuru/13124.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Greek salad/3821076.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Green curry/68061.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Grilled cheese sandwich/3472174.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Grilled salmon/1545680.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Guacamole/2074886.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Gyoza/993558.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Gyro/78_1.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Hamburger/1035486.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Hamsi/200.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Hot and sour fish and vegetable ragout/200848.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Hot and sour soup/3464402.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Hot dog/380963.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Hue beef rice vermicelli soup/167765.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Huevos rancheros/2958592.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Hummus/1916150.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Hunkar begendi/242.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Ice cream/942002.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Icli kofte/433.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Ispanak/234.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Kaali daal/36_1.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Kebap/200.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Khao soi/311100.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Kisir/353.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Kolokythokeftedes/71_2.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Kung pao chicken/324523.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Lasagna/2013208.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Lobster bisque/2519337.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Lobster roll sandwich/401120.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Macaroni and cheese/227249.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Macarons/3015011.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Malai kofta/76_1.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Manti/43.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Melitzanosalata/63_1.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Minestrone/97044.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Miso soup/2393087.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Moussaka/8_2.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Mushroom risotto/79202.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Mussels/2603722.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Naan/62_1.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Nachos/1295618.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Noodles with fish curry/177300.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Okinawa soba/68444.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Omelette/226902.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Onion rings/1396797.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Oysters/2868463.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Pad thai/2718751.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Paella/537947.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Palak paneer/78_1.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Pancakes/178878.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Paneer tikka/62_1.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Panna cotta/804887.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Papdi chaat/36_1.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Pastitsio/72_2.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Peking duck/955097.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Pho/237386.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Pizza/317861.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Pork chop/237761.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Poutine/3600869.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Pozole/70_2.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Prime rib/1684540.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Pulled pork sandwich/148081.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Ramen/3105468.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Ratatouille/9_1.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Ravioli/277219.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Red velvet cake/1366031.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Risotto/1856220.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Rogan josh/27_2.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Saganaki/99_2.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Salade nicoise/8_2.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Samosa/67878.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Sarma/405.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Sashimi/2078107.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Scallops/2562895.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Seaweed salad/1107466.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Shrimp and grits/576068.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Soba noodle/2108.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Souvlaki/8_2.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Spaghetti bolognese/1856710.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Spaghetti carbonara/2321753.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Spanakopita/97_1.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Spring rolls/581150.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Steak/2771149.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Steamed rice roll/209528.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Stewed pork leg/132449.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Strawberry shortcake/341929.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Sukiyaki/5017.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Sushi/512768.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Tacos/1937704.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Takoyaki/2701599.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Tandoori chicken/90_2.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Tempura/5477.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Thai papaya salad/308190.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Tiramisu/2906386.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Tomatokeftedes/85_1.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Tostadas/95_2.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Tuna tartare/2813744.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Twice cooked pork/82610.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Udon noodle/11199.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Vermicelli noodles with snails/203119.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Waffles/1465178.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Winter melon soup/336192.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Xiao long bao/57933.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Yellow curry/72413.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Yemista/73_2.jpg
+/home/daviddu/CS130/backend/food_id_model/datasets/food-classification/val/Zha jiang mian/326229.jpg
