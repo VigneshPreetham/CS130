@@ -1,14 +1,24 @@
 import { useState } from "react";
 
+import { signIn } from "../../api/api";
+
 export default function SignInPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
 
-    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
-        // TODO: implement sign in logic
+        try {
+            const user = await signIn(email, password);
+        } catch (error) {
+            if (error instanceof Error) {
+                setErrorMessage(error.message);
+            } else {
+                setErrorMessage("An error occurred. Please try again later.");
+            }
+        }
     }
 
     return (

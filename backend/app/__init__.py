@@ -10,15 +10,12 @@ from .utils.database import MongoDBUserCollection
 
 import os
 
+load_dotenv()
+
 
 def create_app():
     app = Flask(__name__)
     CORS(app)
-
-    # app.config.from_object(DevelopmentConfig) # Use the config class
-    dotenv_path = os.path.join(os.path.dirname(__file__), "..", "..", "..", ".env")
-    print(dotenv_path)
-    load_dotenv(dotenv_path=dotenv_path)
 
     mongo_uri = os.getenv("MONGO_URI")
     app.config["MONGO_URI"] = mongo_uri
@@ -26,10 +23,6 @@ def create_app():
 
     app.mongodb_user = MongoDBUserCollection(mongo)
 
-
-
     app.register_blueprint(api, url_prefix="/api")
-
-  
 
     return app

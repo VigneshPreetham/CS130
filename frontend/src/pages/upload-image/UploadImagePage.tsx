@@ -1,5 +1,6 @@
-import Logo from "../../assets/logo.png";
 import { useState } from "react";
+
+import { uploadImage } from "../../api/api";
 
 export default function UploadImagePage() {
     const [uploadedFile, setUploadedFile] = useState<File | null>(null);
@@ -18,7 +19,15 @@ export default function UploadImagePage() {
         setRecipe(null); // Reset recipe when the file is deleted
     };
 
-    const handleGenerateRecipe = () => {
+    const handleGenerateRecipe = async () => {
+        if (uploadedFile) {
+            try {
+                await uploadImage(uploadedFile);
+            } catch (error) {
+                alert(error);
+            }
+        }
+
         // For now, we'll just set a static random recipe
         setRecipe("Random Recipe: 1 cup of flour, 2 eggs, 1/2 cup sugar, 1 tsp vanilla extract, bake for 20 minutes.");
     };
