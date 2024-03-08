@@ -5,10 +5,12 @@ on:
     branches: 
       - main
       - cicd
+      - test
   pull_request:
     branches:
       - main
       - cicd
+      - test
 
 jobs:
   build:
