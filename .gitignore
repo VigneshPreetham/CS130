@@ -12,3 +12,11 @@ bin/
 lib/
 pyvenv.cfg
 **/venv
+
+backend/food_id_model/datasets/
+
+
+*.pth
+checkpoints/
+
+backend/food_id_model/wandb/

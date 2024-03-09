@@ -1,6 +1,6 @@
 config = {
-    "data_path" : "/home/daviddu/Documents/hw2/processed_csv",
-    "batch_size" : 32,
+    "data_path" : "/home/daviddu/CS130/backend/food_id_model/datasets/food-classification",
+    "batch_size" : 16,
     "lr": 0.001,
 
 }
