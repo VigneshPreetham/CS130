@@ -42,12 +42,11 @@ class MongoDBUserCollection:
             return None
     
     def search_usernames(self, username):
-        exact_match = self.users_collection.find_one({"username": username}, {"_id": 0, "id": 1})
+        exact_match = self.users_collection.find_one({"username": username})
+        
         regex_pattern = '^' + username
-        partial_matches = self.users_collection.find({"username": {"$regex": regex_pattern, "$options": "i"}}, {"_id": 0, "id": 1})
-
+        partial_matches = self.users_collection.find({"username": {"$regex": regex_pattern, "$options": "i"}})
         matches = list(partial_matches)
-
         if exact_match: 
             matches = [match for match in matches if match['id'] != exact_match['id']]
             matches.insert(0, exact_match)
