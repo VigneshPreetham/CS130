@@ -50,8 +50,17 @@ class MongoDBUserCollection:
         if exact_match: 
             matches = [match for match in matches if match['id'] != exact_match['id']]
             matches.insert(0, exact_match)
-
+           
         return matches
+    
+    def add_recipe_to_user(self, user_id, recipe_id):
+        query = {"user_id": user_id}
+        update = { "$push" : { "recipes" : recipe_id} }
+
+        result = self.users_collection.update_one(query, update)
+    
+        return result
+
 
 class MongoDBRecipeCollection: 
     def __init__(self, mongo):
@@ -69,8 +78,6 @@ class MongoDBRecipeCollection:
         recipe = self.food_collection.find_one({"id": recipe_id})
 
         return recipe
-
-   
 
 class AmazonS3DB:
     def __init__(self):
