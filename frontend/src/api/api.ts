@@ -1,8 +1,13 @@
 import axios from "axios";
+import { SingleRecipe } from "../components/recipeTileList";
 
 export const api = axios.create({
     baseURL: process.env.REACT_APP_SERVER_URL + "/api",
 });
+
+export async function getRecipes(userId: string) : Promise<SingleRecipe[]>{
+    return []
+}
 
 export async function uploadImage(file: File): Promise<string> {
     const formData = new FormData();

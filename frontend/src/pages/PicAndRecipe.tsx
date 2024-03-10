@@ -1,5 +1,7 @@
-import logo from "../assets/logo.png";
+import logo from '../assets/logo.png';
 import { useParams } from "react-router-dom";
+import React from 'react';
+
 
 interface PicAndRecipePrps {
     exampleParam: string;

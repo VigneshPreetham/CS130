@@ -13,6 +13,14 @@ export interface RecipeTileProps {
 export function RecipeTile({index, name, id, pic}: RecipeTileProps){
     const globalUser = '2';
 
+    function removeRecipeFromUser(){
+
+    }
+
+    function addReciptToUser(){
+        
+    }
+
     return (
         <div className="flex w-full justify-center my-3">
             <div className="relative flex place-items-center w-1/2 h-20 bg-slate-200 rounded-md border-2 border-black" >
