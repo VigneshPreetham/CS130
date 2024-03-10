@@ -11,9 +11,10 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 
 from ..extensions import mongo
 from ..utils.database import MongoDBUserCollection
+from ..utils.database import AmazonS3DB
 
 
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+'''ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -95,7 +96,7 @@ def get_recipes():
 
     recipes = current_app.mongodb_user.get_recipes(user_id)
 
-    return jsonify(recipes), 200
+    return jsonify(recipes), 200'''
 
 blueprint = Blueprint('api', __name__, url_prefix = '/api')
 api = Api(blueprint, title='My API', version='1.0', description='A simple API')
@@ -118,6 +119,38 @@ signup_response_model = api.model('SignupResponse', {
     'username': fields.String(description='User username'),
     'error': fields.String(description='Error message'),
 })
+
+@ns.route('/search_recipe')
+class RecipeSearch(Resource):
+    #@ns.doc('search_recipe')
+    @ns.expect(ns.parser().add_argument('recipe', type=str, required=True, help='Recipe search query', location='args'))
+    def get(self):
+        args = request.args
+        query = args.get("recipe", "")
+        recipes = current_app.mongodb_recipe.search_recipe(query)
+        recipes = [add_image_data(recipe) for recipe in recipes]
+        return {'recipes': recipes}
+
+
+@ns.route('/user_info')
+class UserInfo(Resource):
+    @ns.expect(ns.parser().add_argument('user_id', type=str, required=True, help="User ID to get information", location='args'))
+    def get(self):
+        args = request.args
+        user_id = args.get("user_id", "")
+        user_recipes = current_app.mongodb_recipe.get_recipes(user_id)
+        user_recipes = [add_image_data(recipe) for recipe in user_recipes]
+        username = current_app.mongodb_user.get_username(user_id)
+        return{'username': username, 'recipes': user_recipes}
+
+
+def add_image_data(recipe):
+    filename = recipe["photo_filename"]
+    s3 = boto3.client('s3', aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"), aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"))
+
+    s3_response_object = s3.get_object(Bucket="cs130-app-photos", Key=filename)
+    object_content = s3_response_object['Body'].read()
+    recipe["photo_data"] = object_content
 
 
 @ns.route('/signup')
@@ -180,7 +213,6 @@ class UserSearch(Resource):
             user_list.append(user_data)
 
         return {'users': user_list}
-    
 
 # api = Blueprint("api", __name__)
 
