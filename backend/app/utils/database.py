@@ -54,7 +54,7 @@ class MongoDBUserCollection:
         return matches
 
     def add_recipe_to_user(self, user_id, recipe_id):
-        query = {"user_id": user_id}
+        query = {"id": user_id}
         update = { "$push" : { "recipes" : recipe_id} }
 
         result = self.users_collection.update_one(query, update)
@@ -62,7 +62,7 @@ class MongoDBUserCollection:
         return result
     
     def get_username(self, user_id):
-        return self.users_collection.find_one({"user_id": user_id})
+        return self.users_collection.find_one({"id": user_id})["username"]
 
 
 
@@ -83,7 +83,12 @@ class MongoDBRecipeCollection:
         return recipe
     
     def get_recipes(self, user_id):
-        recipe_ids = self.users_collection.find_one({"user_id": user_id}).recipes
+        user = self.users_collection.find_one({"id": user_id})
+
+        if(user):
+            recipe_ids = user["recipes"]
+        else:
+            return []
 
         recipes = []
         for recipe_id in recipe_ids:
