@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useUser } from "../hooks/useUser";
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
-// import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
 import logo from "../assets/logo.png";
 import { Link } from "react-router-dom";
@@ -32,7 +31,6 @@ function Dropdown() {
                             d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
                         />
                     </svg>
-                    {/* <ChevronDownIcon className="-mr-1 h-5 w-5 text-gray-400" aria-hidden="true" /> */}
                 </Menu.Button>
             </div>
 
@@ -60,7 +58,10 @@ function Dropdown() {
                         <Menu.Item>
                             {({ active }) => (
                                 <span
-                                    className={classNames(active ? "bg-gray-100 text-gray-900" : "text-gray-700", "cursor-pointer block px-4 py-2 text-sm")}
+                                    className={classNames(
+                                        active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                                        "cursor-pointer block px-4 py-2 text-sm"
+                                    )}
                                     onClick={logout}
                                 >
                                     Log out
