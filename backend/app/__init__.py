@@ -23,6 +23,7 @@ def create_app():
     CORS(app)
 
     mongo_uri = os.getenv("MONGO_URI")
+
     app.config["MONGO_URI"] = mongo_uri
     mongo.init_app(app)
     app.wsgi_app = ProxyFix(app.wsgi_app)
