@@ -16,17 +16,6 @@ from ..extensions import mongo, chatgpt
 from ..utils.database import MongoDBUserCollection
 from ..utils.database import AmazonS3DB
 
-
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
-
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-
-
-    
-
 def upload_photo_to_s3(file, filename):
     s3 = boto3.client('s3', aws_access_key_id=os.getenv("AWS_ACCESSKEYS"), aws_secret_access_key=os.getenv("SECRETKEY"))
     S3_BUCKET = 'cs130-app-photos'
@@ -40,6 +29,18 @@ def upload_photo_to_s3(file, filename):
     # after upload file to s3 bucket, return filename of the uploaded file
     file_url = f"https://{S3_BUCKET}.s3.amazonaws.com/{filename}"
     return file_url
+
+'''ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+
+    
+
+
 
 
 
@@ -66,6 +67,7 @@ def upload_photo_to_s3(file, filename):
 
 #     return jsonify(recipes), 200
     #return jsonify(recipes), 200
+    return jsonify(recipes), 200'''
 
 blueprint = Blueprint('api', __name__, url_prefix = '/api')
 api = Api(blueprint, title='My API', version='1.0', description='A simple API')
@@ -92,7 +94,7 @@ signup_response_model = api.model('SignupResponse', {
 @ns.route('/search_recipe')
 class RecipeSearch(Resource):
     #@ns.doc('search_recipe')
-    @ns.expect(ns.parser().add_argument('recipe', type=str, required=True, help='Recipe search query', location='args'))
+    @ns.expect(ns.parser().add_argument('recipe', type=str, required=False, help='Recipe search query', location='args'))
     def get(self):
         args = request.args
         query = args.get("recipe", "")
