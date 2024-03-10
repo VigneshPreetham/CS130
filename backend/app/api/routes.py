@@ -17,7 +17,7 @@ from ..utils.database import MongoDBUserCollection
 from ..utils.database import AmazonS3DB
 
 def upload_photo_to_s3(file, filename):
-    s3 = boto3.client('s3', aws_access_key_id=os.getenv("AWS_ACCESSKEYS"), aws_secret_access_key=os.getenv("SECRETKEY"))
+    s3 = boto3.client('s3', aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"), aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"))
     S3_BUCKET = 'cs130-app-photos'
     try:
         s3.upload_fileobj(file, S3_BUCKET, filename)
@@ -28,6 +28,7 @@ def upload_photo_to_s3(file, filename):
     
     # after upload file to s3 bucket, return filename of the uploaded file
     file_url = f"https://{S3_BUCKET}.s3.amazonaws.com/{filename}"
+    print("HERE AT FILE URL")
     return file_url
 
 '''ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
@@ -194,7 +195,6 @@ upload_parser.add_argument('file', location='files',
                            help='Image file')
 upload_parser.add_argument('email', type=str, required=True, help='User email')
 
-UPLOAD_FOLDER = '/home/iguan/CS130'
 
 
 @ns.route('/upload_image')
@@ -209,22 +209,46 @@ class ImageUpload(Resource):
             # For example, save the file
             filename = secure_filename(uploaded_file.filename)
             unique_filename = f"{filename}-{int(time.time())}"
-            file_url = '' # upload_photo_to_s3(uploaded_file, unique_filename)
+            uploaded_file.seek(0)  # Ensure pointer is at start
+            file_data = uploaded_file.read()
 
-            uploaded_file = args['file'] 
+            # Create a new BytesIO object for uploading to S3
+            bytes_io_for_upload = BytesIO(file_data)
 
-            in_memory_file = BytesIO()
-            uploaded_file.save(in_memory_file)
-            in_memory_file.seek(0)
-            encoded_image = base64.b64encode(in_memory_file.read()).decode('utf-8')
+            file_url = upload_photo_to_s3(bytes_io_for_upload, unique_filename)
+
+            bytes_io_for_encoding = BytesIO(file_data)
+            encoded_image = base64.b64encode(bytes_io_for_encoding.read()).decode('utf-8')
+
             
             food_name = chatgpt.image_identifier(encoded_image)
             recipe = chatgpt.generate_recipe(food_name)
             current_app.mongodb_recipe.insert_recipe(file_url, food_name, recipe, email )
 
-            return {'message': 'Image uploaded successfully, recipe generated', 'filename': unique_filename, 's3_url': '', 'name': food_name,  'recipe': recipe}, 200
+            return {'message': 'Image uploaded successfully, recipe generated', 'filename': unique_filename, 's3_url': file_url, 'name': food_name,  'recipe': recipe}, 200
         else:
             return {'message': 'No file uploaded'}, 400
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         # args = request.args
         # query = args.get("username", "")
