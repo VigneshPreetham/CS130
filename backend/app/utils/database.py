@@ -73,11 +73,11 @@ class MongoDBRecipeCollection:
         self.food_collection = self.db['food']
         self.users_collection = self.db['users']
     
-    def insert_recipe(self, link_to_s3, name, recipe, creator, file_name):
+    def insert_recipe(self, link, name, recipe, created_by, file_name):
         now = datetime.now()
         formatted_now = now.strftime("%Y-%m-%d %H:%M:%S")
         recipe_id = str(uuid.uuid4())
-        self.food_collection.insert_one({"id": recipe_id, "link": link_to_s3, "file_name": file_name, "name": name,  "recipe": recipe, "created_by": creator,  "created_on": formatted_now })
+        self.food_collection.insert_one({"id": recipe_id, "link": link, "file_name": file_name, "name": name,  "recipe": recipe, "created_by": created_by,  "created_on": formatted_now })
         recipe = self.food_collection.find_one({"id": recipe_id})
 
         return recipe
@@ -94,6 +94,7 @@ class MongoDBRecipeCollection:
         for recipe_id in recipe_ids:
             
             recipe = self.food_collection.find_one({"id": recipe_id})
+            print(recipe)
             recipe_data = {
                 'id': recipe['id'],
                 'name': recipe['name'],
