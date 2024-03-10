@@ -31,45 +31,6 @@ def upload_photo_to_s3(file, filename):
     print("HERE AT FILE URL")
     return file_url
 
-'''ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
-
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-
-
-    
-
-
-
-
-
-# @api.route('/add_recipe', methods=['POST'])
-# def add_recipe():
-#     data = request.get_json()
-#     # Check if the post request has the neccesary recipe data
-#     if 'user_id' not in data:
-#         return jsonify({'message': 'No user_id'}), 400
-#     if 'recipe_id' not in data:
-#         return jsonify({'message': 'No recipe_id'}), 400
-
-#     result = current_app.mongodb_user.add_recipe_to_user(data.get("user_id"), data.get("recipe_id"))
-
-#     return jsonify({"message": "Recipe added to User successfully"}), 200
-
-# @api.route('/get_recipes', methods=['GET'])
-# def get_recipes():
-
-#     data = request.get_json()
-#     user_id = data.get('user_id')
-
-#     recipes = current_app.mongodb_user.get_recipes(user_id)
-
-#     return jsonify(recipes), 200
-    #return jsonify(recipes), 200
-    return jsonify(recipes), 200'''
-
 blueprint = Blueprint('api', __name__, url_prefix = '/api')
 api = Api(blueprint, title='My API', version='1.0', description='A simple API')
 
@@ -100,7 +61,6 @@ class RecipeSearch(Resource):
         args = request.args
         query = args.get("recipe", "")
         recipes = current_app.mongodb_recipe.search_recipe(query)
-        recipes = [add_image_data(recipe) for recipe in recipes]
         return {'recipes': recipes}
 
 
@@ -111,19 +71,29 @@ class UserInfo(Resource):
         args = request.args
         user_id = args.get("user_id", "")
         user_recipes = current_app.mongodb_recipe.get_recipes(user_id)
-        user_recipes = [add_image_data(recipe) for recipe in user_recipes]
         username = current_app.mongodb_user.get_username(user_id)
         return{'username': username, 'recipes': user_recipes}
 
+add_recipe_parser = api.parser()
+add_recipe_parser.add_argument('user_id', type=str, required=True, help='User to add recipe to', location='args')
+add_recipe_parser.add_argument('recipe_id', type=str, required=True, help='Recipe to add', location='args')
 
-def add_image_data(recipe):
-    filename = recipe["photo_filename"]
-    s3 = boto3.client('s3', aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"), aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"))
+@ns.route('/add_recipe')
+class AddRecipe(Resource):
+    @api.doc('add_recipe', parser=add_recipe_parser)
+    def post(self):
+        args = add_recipe_parser.parse_args()
+        recipe_id = args['recipe_id']
+        user_id = args['user_id']
 
-    s3_response_object = s3.get_object(Bucket="cs130-app-photos", Key=filename)
-    object_content = s3_response_object['Body'].read()
-    recipe["photo_data"] = object_content
+        user_recipes = current_app.mongodb_recipe.get_recipes(user_id)
+        for recipe in user_recipes:
+            if recipe["id"] == recipe_id:
+                return {"message": "User has already added recipe"}
 
+        result = current_app.mongodb_user.add_recipe_to_user(user_id, recipe_id)
+
+        return {"message": "Recipe added to User successfully"}, 200
 
 @ns.route('/signup')
 class Signup(Resource):
@@ -193,7 +163,7 @@ upload_parser = api.parser()
 upload_parser.add_argument('file', location='files',
                            type=FileStorage, required=True,
                            help='Image file')
-upload_parser.add_argument('email', type=str, required=True, help='User email')
+upload_parser.add_argument('user_id', type=str, required=True, help='User id')
 
 
 
@@ -203,7 +173,7 @@ class ImageUpload(Resource):
     def post(self):
         args = upload_parser.parse_args()
         uploaded_file = args['file']  # This is a FileStorage instance
-        email = args['email']
+        user_id = args['user_id']
 
         if uploaded_file:
             # For example, save the file
@@ -223,7 +193,7 @@ class ImageUpload(Resource):
             
             food_name = chatgpt.image_identifier(encoded_image)
             recipe = chatgpt.generate_recipe(food_name)
-            current_app.mongodb_recipe.insert_recipe(file_url, food_name, recipe, email )
+            current_app.mongodb_recipe.insert_recipe(file_url, food_name, recipe, user_id )
 
             return {'message': 'Image uploaded successfully, recipe generated', 'filename': unique_filename, 's3_url': file_url, 'name': food_name,  'recipe': recipe}, 200
         else:

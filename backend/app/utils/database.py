@@ -93,8 +93,16 @@ class MongoDBRecipeCollection:
         recipes = []
         for recipe_id in recipe_ids:
             
-            recipe = self.food_collection.find_one({"recipe_id": recipe_id})
-            recipes.append(recipe)
+            recipe = self.food_collection.find_one({"id": recipe_id})
+            recipe_data = {
+                'id': recipe['id'],
+                'name': recipe['name'],
+                'recipe': recipe['recipe'],
+                'created_by': recipe["created_by"],
+                'created_on': recipe["created_on"], 
+                'link': recipe['link']
+            }
+            recipes.append(recipe_data)
         
         return recipes
     
@@ -108,7 +116,19 @@ class MongoDBRecipeCollection:
             matches.remove(exact_match)
             matches.insert(0, exact_match)
         
-        return matches
+        recipes = []
+        for match in matches:
+            recipe_data = {
+                'id': match['id'],
+                'name': match['name'],
+                'recipe': match['recipe'],
+                'created_by': match["created_by"],
+                'created_on': match["created_on"], 
+                'link': match['link']
+            }
+        recipes.append(recipe_data)
+
+        return recipes
 
 class AmazonS3DB:
     def __init__(self):
