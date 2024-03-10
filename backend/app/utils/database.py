@@ -100,10 +100,10 @@ class MongoDBRecipeCollection:
         return recipes
     
     def search_recipe(self, recipe_search):
-        exact_match = self.recipe_collection.find_one({"name": recipe_search})
+        exact_match = self.food_collection.find_one({"name": recipe_search})
 
         regex_pattern = recipe_search
-        partial_matches = self.recipe_collection.find({"name": {"$regex": regex_pattern, "$options": "i"}}).limit(20)
+        partial_matches = self.food_collection.find({"name": {"$regex": regex_pattern, "$options": "i"}}).limit(20)
         matches = list(partial_matches)
         if exact_match:
             matches.remove(exact_match)

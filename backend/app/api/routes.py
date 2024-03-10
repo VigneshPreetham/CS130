@@ -123,7 +123,7 @@ signup_response_model = api.model('SignupResponse', {
 @ns.route('/search_recipe')
 class RecipeSearch(Resource):
     #@ns.doc('search_recipe')
-    @ns.expect(ns.parser().add_argument('recipe', type=str, required=True, help='Recipe search query', location='args'))
+    @ns.expect(ns.parser().add_argument('recipe', type=str, required=False, help='Recipe search query', location='args'))
     def get(self):
         args = request.args
         query = args.get("recipe", "")
