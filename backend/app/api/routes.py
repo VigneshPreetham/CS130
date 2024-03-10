@@ -115,7 +115,7 @@ class Signup(Resource):
         if result is not None:
             return {"email": result["email"], "username": result["username"], "recipes": result['recipes'], "user_id": result["id"], "error": ""}, 200
         else:
-            return {"email": "", "username": "", "error": "User failed to signup"}, 400
+            return {"email": "", "username": "", "error": "Email already exists, please try again with another email"}, 400
 
 @ns.route('/login')
 class Login(Resource):
