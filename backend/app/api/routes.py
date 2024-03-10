@@ -8,63 +8,17 @@ import uuid
 from flask import Flask
 from flask_restx import Api, Resource, fields
 from werkzeug.middleware.proxy_fix import ProxyFix
+import time
+import base64
+from io import BytesIO
 
-from ..extensions import mongo
+from ..extensions import mongo, chatgpt
 from ..utils.database import MongoDBUserCollection
 from ..utils.database import AmazonS3DB
 
-
-'''ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
-
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-@api.route('/upload_recipe', methods=['POST'])
-def upload_recipe():
-    data = request.get_json()
-    # Check if the post request has the neccesary recipe data
-    if 'name' not in data:
-        return jsonify({'message': 'No name'}), 400
-    if 'recipe' not in data:
-        return jsonify({'message': 'No recipe'}), 400
-    if 'creator_id' not in data:
-        return jsonify({'message': 'No creator'}), 400
-    if 'file' not in request.files:
-        return jsonify({'message': 'No file part'}), 400
-    file = request.files['file']
-    # If the user does not select a file, the browser submits an
-    # empty file without a filename.
-    if file.filename == '':
-        return jsonify({'message': 'No selected file'}), 400
-    
-    #upload file to s3
-    if file and allowed_file(file.filename):
-        try:
-            filename = upload_photo_to_s3(file)
-        except ClientError as e:
-            return jsonify({'message': 'Error uploading photo to s3 - ' + e}), 400
-    
-    db = mongo.cx['savor']
-    recipe_collection = db['recipes']
-    name = data.get('name')
-    recipe = data.get('recipe')
-    creator_id = data.get('creator_id')
-    photo_filename = filename
-    recipe_id = str(uuid.uuid4())
-
-    result = recipe_collection.insert_one({"id": recipe_id,
-                                           "name": name,
-                                           "recipe": recipe,
-                                           "photo_filename": photo_filename,
-                                           "creator_id": creator_id})
-    
-    return jsonify({"message": "Recipe successfully created"}), 201
-
-
-def upload_photo_to_s3(file):
-    s3 = boto3.client('s3')
-    filename = secure_filename(file.filename)
+def upload_photo_to_s3(file, filename):
+    s3 = boto3.client('s3', aws_access_key_id=os.getenv("AWS_ACCESSKEYS"), aws_secret_access_key=os.getenv("SECRETKEY"))
+    S3_BUCKET = 'cs130-app-photos'
     try:
         s3.upload_fileobj(file, S3_BUCKET, filename)
 
@@ -73,29 +27,46 @@ def upload_photo_to_s3(file):
         return e
     
     # after upload file to s3 bucket, return filename of the uploaded file
-    return filename
+    file_url = f"https://{S3_BUCKET}.s3.amazonaws.com/{filename}"
+    return file_url
 
-@api.route('/add_recipe', methods=['POST'])
-def add_recipe():
-    data = request.get_json()
-    # Check if the post request has the neccesary recipe data
-    if 'user_id' not in data:
-        return jsonify({'message': 'No user_id'}), 400
-    if 'recipe_id' not in data:
-        return jsonify({'message': 'No recipe_id'}), 400
+'''ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
-    result = current_app.mongodb_user.add_recipe_to_user(data.get("user_id"), data.get("recipe_id"))
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-    return jsonify({"message": "Recipe added to User successfully"}), 200
 
-@api.route('/get_recipes', methods=['GET'])
-def get_recipes():
 
-    data = request.get_json()
-    user_id = data.get('user_id')
+    
 
-    recipes = current_app.mongodb_user.get_recipes(user_id)
 
+
+
+
+# @api.route('/add_recipe', methods=['POST'])
+# def add_recipe():
+#     data = request.get_json()
+#     # Check if the post request has the neccesary recipe data
+#     if 'user_id' not in data:
+#         return jsonify({'message': 'No user_id'}), 400
+#     if 'recipe_id' not in data:
+#         return jsonify({'message': 'No recipe_id'}), 400
+
+#     result = current_app.mongodb_user.add_recipe_to_user(data.get("user_id"), data.get("recipe_id"))
+
+#     return jsonify({"message": "Recipe added to User successfully"}), 200
+
+# @api.route('/get_recipes', methods=['GET'])
+# def get_recipes():
+
+#     data = request.get_json()
+#     user_id = data.get('user_id')
+
+#     recipes = current_app.mongodb_user.get_recipes(user_id)
+
+#     return jsonify(recipes), 200
+    #return jsonify(recipes), 200
     return jsonify(recipes), 200'''
 
 blueprint = Blueprint('api', __name__, url_prefix = '/api')
@@ -214,6 +185,103 @@ class UserSearch(Resource):
             user_list.append(user_data)
 
         return {'users': user_list}
+    
+from werkzeug.datastructures import FileStorage
+
+upload_parser = api.parser()
+upload_parser.add_argument('file', location='files',
+                           type=FileStorage, required=True,
+                           help='Image file')
+upload_parser.add_argument('email', type=str, required=True, help='User email')
+
+UPLOAD_FOLDER = '/home/iguan/CS130'
+
+
+@ns.route('/upload_image')
+class ImageUpload(Resource):
+    @api.doc('upload_image', parser=upload_parser)
+    def post(self):
+        args = upload_parser.parse_args()
+        uploaded_file = args['file']  # This is a FileStorage instance
+        email = args['email']
+
+        if uploaded_file:
+            # For example, save the file
+            filename = secure_filename(uploaded_file.filename)
+            unique_filename = f"{filename}-{int(time.time())}"
+            file_url = '' # upload_photo_to_s3(uploaded_file, unique_filename)
+
+            uploaded_file = args['file'] 
+
+            in_memory_file = BytesIO()
+            uploaded_file.save(in_memory_file)
+            in_memory_file.seek(0)
+            encoded_image = base64.b64encode(in_memory_file.read()).decode('utf-8')
+            
+            food_name = chatgpt.image_identifier(encoded_image)
+            recipe = chatgpt.generate_recipe(food_name)
+            current_app.mongodb_recipe.insert_recipe(file_url, food_name, recipe, email )
+
+            return {'message': 'Image uploaded successfully, recipe generated', 'filename': unique_filename, 's3_url': '', 'name': food_name,  'recipe': recipe}, 200
+        else:
+            return {'message': 'No file uploaded'}, 400
+
+        # args = request.args
+        # query = args.get("username", "")
+        # users= current_app.mongodb_user.search_usernames(query)
+        # user_list = [] 
+        # for user in users:
+        #     user_data = {
+        #         'email': user['email'],
+        #         'username': user['username'],
+        #         # Ensure recipes data is structured as a list of strings; adjust as necessary
+        #         'recipes': user.get('recipes', [])
+        #     }
+        #     user_list.append(user_data)
+
+        # return {'users': user_list}
+    
+
+# @api.route('/upload_recipe', methods=['POST'])
+# def upload_recipe():
+#     data = request.get_json()
+#     # Check if the post request has the neccesary recipe data
+#     if 'name' not in data:
+#         return jsonify({'message': 'No name'}), 400
+#     if 'recipe' not in data:
+#         return jsonify({'message': 'No recipe'}), 400
+#     if 'creator_id' not in data:
+#         return jsonify({'message': 'No creator'}), 400
+#     if 'file' not in request.files:
+#         return jsonify({'message': 'No file part'}), 400
+#     file = request.files['file']
+#     # If the user does not select a file, the browser submits an
+#     # empty file without a filename.
+#     if file.filename == '':
+#         return jsonify({'message': 'No selected file'}), 400
+    
+#     #upload file to s3
+#     if file and allowed_file(file.filename):
+#         try:
+#             filename = upload_photo_to_s3(file)
+#         except ClientError as e:
+#             return jsonify({'message': 'Error uploading photo to s3 - ' + e}), 400
+    
+#     db = mongo.cx['savor']
+#     recipe_collection = db['recipes']
+#     name = data.get('name')
+#     recipe = data.get('recipe')
+#     creator_id = data.get('creator_id')
+#     photo_filename = filename
+#     recipe_id = str(uuid.uuid4())
+
+#     result = recipe_collection.insert_one({"id": recipe_id,
+#                                            "name": name,
+#                                            "recipe": recipe,
+#                                            "photo_filename": photo_filename,
+#                                            "creator_id": creator_id})
+    
+#     return jsonify({"message": "Recipe successfully created"}), 201
 
 # api = Blueprint("api", __name__)
 
