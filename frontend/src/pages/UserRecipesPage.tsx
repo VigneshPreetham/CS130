@@ -25,8 +25,6 @@ export default function UserRecipesPage() {
         );
     })
 
-    
-
 
     return (
         <div>

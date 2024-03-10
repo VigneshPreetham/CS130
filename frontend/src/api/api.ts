@@ -6,7 +6,11 @@ export const api = axios.create({
 });
 
 export async function getRecipes(userId: string) : Promise<SingleRecipe[]>{
-    return []
+    const response = await api.get<{ message: string }>(
+        "/user_info", 
+        {params: JSON.stringify({"user_id": userId})}
+    )
+    return [];
 }
 
 export async function uploadImage(file: File): Promise<string> {

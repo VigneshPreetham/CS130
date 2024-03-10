@@ -6,9 +6,9 @@ import PicAndRecipe from "./pages/PicAndRecipe";
 import UserRecipesPage from "./pages/UserRecipesPage";
 import SignUpPage from "./pages/sign-up/SignUp";
 import UploadImagePage from "./pages/upload-image/UploadImagePage";
+import SearchResultsPage from "./pages/SearchResultsPage";
 
 import { useUser } from "./hooks/useUser";
-import SearchResultsPage from "./pages/SearchResultsPage";
 
 function App() {
     const { loggedIn } = useUser();
@@ -22,6 +22,7 @@ function App() {
                             <Route path="/upload" element={<UploadImagePage />} />
                             <Route path="/recipe/:id" element={<PicAndRecipe exampleParam={"2"} />} />
                             <Route path="/user/:id/recipes" element={<UserRecipesPage />} />
+                            <Route path='/results' element={<SearchResultsPage />} />
                             <Route path="*" element={<Navigate replace to="/upload" />} />
                         </>
                     ) : (
