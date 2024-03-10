@@ -52,7 +52,7 @@ class MongoDBUserCollection:
             matches.insert(0, exact_match)
            
         return matches
-    
+
     def add_recipe_to_user(self, user_id, recipe_id):
         query = {"user_id": user_id}
         update = { "$push" : { "recipes" : recipe_id} }
@@ -60,6 +60,10 @@ class MongoDBUserCollection:
         result = self.users_collection.update_one(query, update)
     
         return result
+    
+    def get_username(self, user_id):
+        return self.users_collection.find_one({"user_id": user_id})
+
 
 
 class MongoDBRecipeCollection: 
@@ -78,6 +82,29 @@ class MongoDBRecipeCollection:
         recipe = self.food_collection.find_one({"id": recipe_id})
 
         return recipe
+    
+    def get_recipes(self, user_id):
+        recipe_ids = self.users_collection.find_one({"user_id": user_id}).recipes
+
+        recipes = []
+        for recipe_id in recipe_ids:
+            
+            recipe = self.food_collection.find_one({"recipe_id": recipe_id})
+            recipes.append(recipe)
+        
+        return recipes
+    
+    def search_recipe(self, recipe_search):
+        exact_match = self.recipe_collection.find_one({"name": recipe_search})
+
+        regex_pattern = recipe_search
+        partial_matches = self.recipe_collection.find({"name": {"$regex": regex_pattern, "$options": "i"}}).limit(20)
+        matches = list(partial_matches)
+        if exact_match:
+            matches.remove(exact_match)
+            matches.insert(0, exact_match)
+        
+        return matches
 
 class AmazonS3DB:
     def __init__(self):
