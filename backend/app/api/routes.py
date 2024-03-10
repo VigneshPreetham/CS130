@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, current_app
+from flask import Blueprint, request, jsonify, current_app, Response
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash
 import os
@@ -207,12 +207,33 @@ class ImageUpload(Resource):
             
             food_name = chatgpt.image_identifier(encoded_image)
             generated_recipe = chatgpt.generate_recipe(food_name)
-            recipe = current_app.mongodb_recipe.insert_recipe(file_url, food_name, generated_recipe, user_id )
+            recipe = current_app.mongodb_recipe.insert_recipe(file_url, food_name, generated_recipe, user_id, unique_filename)
             current_app.mongodb_user.add_recipe_to_user(user_id, recipe['id'])
 
             return {'message': 'Image uploaded successfully, recipe generated', 'id': recipe['id'], 'filename': unique_filename, 's3_url': file_url, 'name': food_name,  'recipe': generated_recipe}, 200
         else:
             return {'message': 'No file uploaded'}, 400
+
+@ns.route('/get_image')
+class GetImage(Resource):
+    @ns.expect(ns.parser().add_argument('recipe_id', type=str, required=True, help="Get Image from S3 Using Recipe ID", location='args'))
+    def get(self):
+        try:
+            args = request.args
+            recipe_id = args.get("recipe_id", "")
+            recipe = current_app.mongodb_recipe.get_recipe_by_id(recipe_id)
+            file_name = recipe['file_name']
+            s3 = boto3.client('s3', aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"), aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"))
+            S3_BUCKET = 'cs130-app-photos'
+            s3_response = s3.get_object(Bucket=S3_BUCKET, Key=file_name)
+            image_bytes = s3_response['Body'].read()
+            content_type = s3_response['ContentType']
+            return Response(image_bytes, mimetype=content_type)
+       
+        except Exception as e:
+            return str(e), 404
+
+
 
 
 
