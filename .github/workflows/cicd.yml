@@ -34,6 +34,8 @@ jobs:
     # Run your unit tests
     - name: Run Tests
       run: python -m unittest discover
+      working-directory: backend/app/tests
+
 
     - name: Setup Backend Environment
       run: echo "Backend setup will go here"
