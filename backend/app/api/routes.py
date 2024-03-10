@@ -168,7 +168,7 @@ class Signup(Resource):
         hashed_password = generate_password_hash(password)
         result = current_app.mongodb_user.signup_user(email, username, password)
         if result is not None:
-            return {"email": result["email"], "username": result["username"], "recipes": result['recipes'], "error": ""}, 200
+            return {"email": result["email"], "username": result["username"], "recipes": result['recipes'], "user_id": result["id"], "error": ""}, 200
         else:
             return {"email": "", "username": "", "error": "User failed to signup"}, 400
 
@@ -184,7 +184,7 @@ class Signup(Resource):
         result = current_app.mongodb_user.login_user(email, password)
         if result is not None:
             return (
-                {"email": result["email"], "username": result["username"], "recipes": result["recipes"],  "error": ""}, 200
+                {"email": result["email"], "username": result["username"], "recipes": result["recipes"], "user_id": result["id"],  "error": ""}, 200
             )
         else:
             return (
@@ -208,7 +208,8 @@ class UserSearch(Resource):
                 'email': user['email'],
                 'username': user['username'],
                 # Ensure recipes data is structured as a list of strings; adjust as necessary
-                'recipes': user.get('recipes', [])
+                'recipes': user.get('recipes', []),
+                'user_id': user["id"]
             }
             user_list.append(user_data)
 
