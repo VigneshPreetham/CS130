@@ -1,17 +1,22 @@
 import { useState } from "react";
 
 import { signIn } from "../../api/api";
+import { useUser } from "../../hooks/useUser";
+import { Link } from "react-router-dom";
 
 export default function SignInPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
 
+    const { login } = useUser();
+
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
         try {
             const user = await signIn(email, password);
+            login(user.username, user.email, user.user_id);
         } catch (error) {
             if (error instanceof Error) {
                 setErrorMessage(error.message);
@@ -66,7 +71,6 @@ export default function SignInPage() {
                                 />
                             </div>
                         </div>
-
                         <div className="flex flex-col items-center gap-2">
                             <button
                                 type="submit"
@@ -78,6 +82,12 @@ export default function SignInPage() {
                         </div>
                     </form>
                 </div>
+                <span className="w-full mt-3 text-center">
+                    Don't have an account?{" "}
+                    <Link to="/sign-up" className="text-logo-red font-bold">
+                        Sign Up
+                    </Link>
+                </span>
             </div>
         </div>
     );
