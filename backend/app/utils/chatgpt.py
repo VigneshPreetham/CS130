@@ -34,7 +34,7 @@ class ChatGPT:
         }
 
         final_answer = requests.post("https://api.openai.com/v1/chat/completions", headers=headers_for_model, json=food_label)
-        #print(final_answer.text)
+        # print(final_answer.text)
         #print(final_answer.json()['choices'][0]['message']['content'])
         return (final_answer.json()['choices'][0]['message']['content'])
         #print(final_answer.text)
