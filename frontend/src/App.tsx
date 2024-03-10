@@ -11,10 +11,11 @@ import { useUser } from "./hooks/useUser";
 
 function App() {
     const { loggedIn } = useUser();
+
     return (
         <Router>
             <div className="App">
-                <Header></Header>
+                <Header />
                 <Routes>
                     {loggedIn ? (
                         <>
