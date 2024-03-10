@@ -62,7 +62,7 @@ class MongoDBUserCollection:
         return result
     
     def get_username(self, user_id):
-        return self.users_collection.find_one({"id": user_id})["username"]
+        return self.users_collection.find_one({"id": user_id})
 
 
 
@@ -129,6 +129,17 @@ class MongoDBRecipeCollection:
         recipes.append(recipe_data)
 
         return recipes
+
+
+    def get_recipe_by_id(self, recipe_id):            
+        recipe = self.food_collection.find_one({"id": recipe_id})
+
+        if recipe is not None:
+            return recipe
+        else:
+            return None
+
+
 
 class AmazonS3DB:
     def __init__(self):
