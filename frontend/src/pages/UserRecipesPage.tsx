@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import logo from '../assets/logo.png'
-import { RecipeTileList, SingleRecipe } from '../components/recipeTileList';
+import { TileList, SingleObject } from '../components/tileList';
 import { getRecipes } from '../api/api';
 
-const userId = '1';
+const userId = 'f650444e-1154-49f6-94aa-6a1acfdc0ae7';
 
-let recipesData: SingleRecipe[] = [
+let recipesData: SingleObject[] = [
     {id: "1", name: "Pizza", pic: logo},
     {id: "2", name: "Pasta", pic: logo},
     {id: "3", name: "Gourmet Salad", pic: logo},
@@ -16,7 +16,7 @@ let recipesData: SingleRecipe[] = [
 
 export default function UserRecipesPage() {
 
-    const [recipes, setRecipes] = useState<SingleRecipe[]>(recipesData);
+    const [recipes, setRecipes] = useState<SingleObject[]>(recipesData);
 
     useEffect(() =>{
         getRecipes(userId).then(result => {
@@ -29,7 +29,7 @@ export default function UserRecipesPage() {
     return (
         <div>
             <div className="m-4 font-bold text-center text-logo-red text-2xl">USERNAME's Recipes</div>
-            <RecipeTileList recipes={recipes}></RecipeTileList>
+            <TileList isUser={false} toList={recipes}/>
         </div>
     )
 }

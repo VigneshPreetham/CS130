@@ -1,17 +1,23 @@
 import axios from "axios";
-import { SingleRecipe } from "../components/recipeTileList";
+import { SingleObject } from "../components/tileList";
 
 export const api = axios.create({
-    baseURL: process.env.REACT_APP_SERVER_URL + "/api",
+    baseURL: "http://127.0.0.1:5000/api",
 });
 
-export async function getRecipes(userId: string) : Promise<SingleRecipe[]>{
+export async function getRecipes(userId: string) : Promise<SingleObject[]>{
     const response = await api.get<{ message: string }>(
         "/user_info", 
-        {params: JSON.stringify({"user_id": userId})}
+        {params: {"user_id": userId}}
     )
+    console.log(response)
     return [];
 }
+
+export async function searchRecipes(searchText: (string|null)) : Promise<SingleObject[]>{
+    return [];
+}
+
 
 export async function uploadImage(file: File): Promise<string> {
     const formData = new FormData();
