@@ -6,23 +6,26 @@ export const api = axios.create({
 });
 
 export interface dbRecipe {
-    created_by: string;
-    created_on: string;
-    id: string;
-    link: string;
-    name: string;
-    recipe: string;
+    created_by : string,
+    created_on : string,
+    id : string,
+    name: string,
+    recipe : string,
+    users_added: string[]
 }
 
 export interface dbUser {
-    email: string;
-    username: string;
-    recipes: dbRecipe[];
-    user_id: string;
+    email: string,
+    username: string,
+    recipes: dbRecipe[],
+    user_id: string
 }
 
-export async function getUserName(userId: string): Promise<string> {
-    const response = await api.get<{ recipes: dbRecipe[]; username: string }>("/user_info", { params: { user_id: userId } });
+export async function getUserName(userId: string) : Promise<string> {
+    const response = await api.get<{ recipes: dbRecipe[], username: string }>(
+        "/user_info", 
+        {params: {"user_id": userId}}
+    )
 
     if (response.status !== 200) {
         throw new Error(response.statusText);
@@ -30,75 +33,111 @@ export async function getUserName(userId: string): Promise<string> {
     return response.data.username;
 }
 
-export async function getRecipes(userId: string): Promise<dbRecipe[]> {
-    const response = await api.get<{ recipes: dbRecipe[]; username: string }>("/user_info", { params: { user_id: userId } });
-
+export async function getRecipes(userId: string) : Promise<dbRecipe[]> {
+    const response = await api.get<{ recipes: dbRecipe[], username: string }>(
+        "/user_info", 
+        {params: {"user_id": userId}}
+    )
+    
     if (response.status !== 200) {
         throw new Error(response.statusText);
     }
     return response.data.recipes;
 }
 
-export async function getRecipe(recipeId: string): Promise<dbRecipe> {
+export async function getRecipe(recipeId: string) : Promise<dbRecipe> {
     const response = await api.get<{
-        recipe_id: string;
-        name: string;
-        recipe: string;
-        link: string;
-        created_by: string;
-    }>("/recipe_info", { params: { recipe_id: recipeId } });
-
+        recipe_id: string,
+        name: string,
+        recipe: string,
+        created_by: string
+        users_added: string[]
+    }>(
+        "/recipe_info", 
+        {params: {"recipe_id": recipeId}}
+    )
+    
     if (response.status !== 200) {
         throw new Error(response.statusText);
     }
 
     return {
-        created_by: response.data.created_by,
-        created_on: "",
-        id: response.data.recipe_id,
-        link: response.data.link,
+        created_by : response.data.created_by,
+        created_on : "",
+        id : response.data.recipe_id,
         name: response.data.name,
-        recipe: response.data.recipe,
+        recipe : response.data.recipe,
+        users_added: response.data.users_added
     };
 }
 
-export async function addRecipeToUser(userId: string, recipeId: string): Promise<string> {
-    const response = await api.post<{ message: string }>(
-        "/add_recipe",
-        {},
+export async function getImage(recipeId: string) : Promise<any> {
+    const response = await api.get<{}>(
+        "/get_image", 
         {
-            params: {
-                user_id: userId,
-                recipe_id: recipeId,
-            },
-        }
-    );
+            params: {"recipe_id": recipeId}, 
+            responseType: 'blob'
+        },
+    )
+    
+    if (response.status !== 200) {
+        throw new Error(response.statusText);
+    }
+    return response.data;
+}
 
-    console.log("GOT RESPONSE");
-    console.log(response);
+export async function addRecipeToUser(userId: string, recipeId: string) : Promise<string> {
+    const response = await api.post<{ message: string }>(
+        "/add_recipe", null,
+        {params: {
+            "user_id": userId, 
+            "recipe_id": recipeId
+        }}
+    )
     if (response.status !== 200) {
         throw new Error(response.data.message);
     }
     return response.data.message;
 }
 
-export async function searchRecipes(searchText: string | null): Promise<dbRecipe[]> {
-    const response = await api.get<{ recipes: dbRecipe[] }>("/search_recipe", { params: { recipe: searchText } });
+export async function removeRecipeFromUser(userId: string, recipeId: string) : Promise<string> {
+    const response = await api.post<{ message: string }>(
+        "/remove_recipe", null,
+        {params: {
+            "user_id": userId, 
+            "recipe_id": recipeId
+        }}
+    )
+    if (response.status !== 200) {
+        throw new Error(response.data.message);
+    }
+    return response.data.message;
+}
 
+export async function searchRecipes(searchText: (string|null)) : Promise<dbRecipe[]>{
+    const response = await api.get<{ recipes: dbRecipe[]}>(
+        "/search_recipe", 
+        {params: {"recipe": searchText}}
+    )
+    
     if (response.status !== 200) {
         throw new Error(response.statusText);
     }
     return response.data.recipes;
 }
 
-export async function searchUsers(searchText: string | null): Promise<dbUser[]> {
-    const response = await api.get<{ users: dbUser[] }>("/search_username", { params: { username: searchText } });
-
+export async function searchUsers(searchText: (string|null)) : Promise<dbUser[]>{
+    const response = await api.get<{ users: dbUser[]}>(
+        "/search_username", 
+        {params: {"username": searchText}}
+    )
+    
     if (response.status !== 200) {
         throw new Error(response.statusText);
     }
     return response.data.users;
 }
+
 
 type UploadImageResponse = {
     message: string;

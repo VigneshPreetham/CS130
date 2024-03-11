@@ -4,8 +4,6 @@ import { TileList, SingleObject } from '../components/tileList';
 import { getRecipes, getUserName } from '../api/api';
 import { useParams } from 'react-router-dom';
 
-// 'f650444e-1154-49f6-94aa-6a1acfdc0ae7';
-
 
 export default function UserRecipesPage() {
 
@@ -21,7 +19,7 @@ export default function UserRecipesPage() {
                     return {
                         name: r.name,
                         id: r.id,
-                        link: r.link
+                        usersAdded: r.users_added
                     }}
                 ))
             }

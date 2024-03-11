@@ -8,6 +8,7 @@ export default function SearchBar() {
     const navigate = useNavigate()
 
     function search(event: any, searchText: string){
+        console.log(searchText)
         event.preventDefault()
         navigate({
             pathname: '/results',
