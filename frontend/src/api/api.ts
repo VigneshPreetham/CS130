@@ -2,7 +2,7 @@ import axios from "axios";
 import { SingleObject } from "../components/tileList";
 
 export const api = axios.create({
-    baseURL: "http://snap-backend.fly.dev/api",
+    baseURL: process.env.REACT_APP_SERVER_URL + "/api",
 });
 
 export interface dbRecipe {

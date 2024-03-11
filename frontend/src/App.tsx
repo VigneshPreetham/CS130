@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import Header from "./pages/Header";
 import SignInPage from "./pages/sign-in/SignIn";
 import PicAndRecipe from "./pages/PicAndRecipe";
-import RecipesListPage from "./pages/RecipesListPage";
+import UserRecipesPage from "./pages/UserRecipesPage";
 import SignUpPage from "./pages/sign-up/SignUp";
 import UploadImagePage from "./pages/upload-image/UploadImagePage";
 
@@ -20,8 +20,8 @@ function App() {
                     {loggedIn ? (
                         <>
                             <Route path="/upload" element={<UploadImagePage />} />
-                            <Route path="/recipe/:id" element={<PicAndRecipe exampleParam={"2"} />} />
-                            <Route path="/user/:id/recipes" element={<RecipesListPage />} />
+                            <Route path="/recipe/:id" element={<PicAndRecipe />} />
+                            <Route path="/user/:id/recipes" element={<UserRecipesPage />} />
                             <Route path="*" element={<Navigate replace to="/upload" />} />
                         </>
                     ) : (
