@@ -143,7 +143,7 @@ remove_recipe_parser.add_argument(
 remove_recipe_parser.add_argument(
     'recipe_id', type=str, required=True, help='Recipe to remove', location='args'
 )
-@ns.route('remove_recipe')
+@ns.route('/remove_recipe')
 class RemoveRecipe(Resource):
     @api.doc('remove_recipe', parser=remove_recipe_parser)
     def post(self):
