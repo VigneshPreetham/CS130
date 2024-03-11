@@ -1,35 +1,68 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-import { uploadImage } from "../../api/api";
+import { uploadImage, addRecipeToUser } from "../../api/api";
+import { useUser } from "../../hooks/useUser";
 
 export default function UploadImagePage() {
+    const navigate = useNavigate();
+    const { userId } = useUser();
     const [uploadedFile, setUploadedFile] = useState<File | null>(null);
-    const [recipe, setRecipe] = useState<string | null>(null);
+    const [foodName, setFoodName] = useState<string | null>(null);
+    const [recipe, setRecipe] = useState<string>("");
+    const [recipeId, setRecipeId] = useState<string>("");
+    const [loading, setLoading] = useState(false);
+    const [recipeOpacity, setRecipeOpacity] = useState(0);
+
+    const [saveRecipeLoading, setSaveRecipeLoading] = useState(false);
+
+    useEffect(() => {
+        if (recipe) {
+            setRecipeOpacity(1); // Make the recipe visible by fading in
+        } else {
+            setRecipeOpacity(0); // Hide the recipe
+        }
+    }, [recipe]);
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files ? event.target.files[0] : null;
         if (file) {
             setUploadedFile(file);
-            setRecipe(null); // Reset recipe when a new file is uploaded
+            setRecipe(""); // Reset recipe when a new file is uploaded
         }
     };
 
     const handleDeleteFile = () => {
         setUploadedFile(null);
-        setRecipe(null); // Reset recipe when the file is deleted
+        setRecipe(""); // Reset recipe when the file is deleted
     };
 
     const handleGenerateRecipe = async () => {
         if (uploadedFile) {
             try {
-                await uploadImage(uploadedFile);
+                setLoading(true);
+                const res = await uploadImage(uploadedFile, userId);
+                setLoading(false);
+                setFoodName(res.name);
+                setRecipe(res.recipe);
+                setRecipeId(res.id);
             } catch (error) {
                 alert(error);
             }
         }
+    };
 
-        // For now, we'll just set a static random recipe
-        setRecipe("Random Recipe: 1 cup of flour, 2 eggs, 1/2 cup sugar, 1 tsp vanilla extract, bake for 20 minutes.");
+    const handleSaveRecipe = async () => {
+        if (foodName && recipe) {
+            try {
+                setSaveRecipeLoading(true);
+                await addRecipeToUser(userId, recipeId);
+                setSaveRecipeLoading(false);
+                navigate(`/recipe/${recipeId}`);
+            } catch (error) {
+                alert(error);
+            }
+        }
     };
 
     return (
@@ -52,22 +85,34 @@ export default function UploadImagePage() {
                         )}
                         <button
                             className={`flex w-full justify-center rounded-md px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
-                                uploadedFile ? "bg-logo-red hover:bg-red-500 focus-visible:outline-logo-red" : "bg-gray-300"
+                                uploadedFile && !loading ? "bg-logo-red hover:bg-red-500 focus-visible:outline-logo-red" : "bg-gray-300"
                             }`}
-                            disabled={!uploadedFile}
+                            disabled={!uploadedFile || loading}
                             onClick={handleGenerateRecipe}
                         >
-                            Generate Recipe
+                            {loading ? "Loading..." : "Generate Recipe"}
                         </button>
-                        {recipe && (
-                            <div className="w-full max-w-sm p-4 border border-gray-300 rounded-lg dark:border-gray-700">
-                                <h2 className="mb-2 text-xl font-semibold">Recipe</h2>
-                                <p className="text-gray-600 dark:text-gray-400">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore
-                                    magna aliqua.
-                                </p>
-                            </div>
-                        )}
+                    </div>
+                    <div
+                        className="mt-8 w-full p-4 rounded-lg transition-opacity duration-700 flex flex-col items-center"
+                        style={{ opacity: recipeOpacity } as React.CSSProperties}
+                    >
+                        <h2 className="mb-2 w-full text-3xl font-semibold text-center border border-x-0 border-t-0 pb-2">Recipe: {foodName}</h2>
+                        {recipe.split("\n").map((line, index) => (
+                            <React.Fragment key={index}>
+                                {line}
+                                <br />
+                            </React.Fragment>
+                        ))}
+                        <button
+                            className={`flex w-[200px] mt-8 justify-center rounded-md px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
+                                uploadedFile && !loading ? "bg-logo-red hover:bg-red-500 focus-visible:outline-logo-red" : "bg-gray-300"
+                            }`}
+                            // disabled={saveRecipeLoading}
+                            onClick={handleSaveRecipe}
+                        >
+                            {saveRecipeLoading ? "Saving..." : "Save Recipe"}
+                        </button>
                     </div>
                 </div>
             </main>
