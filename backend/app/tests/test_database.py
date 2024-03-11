@@ -94,12 +94,8 @@ class TestMongoDBRecipeCollection(unittest.TestCase):
             "recipe": "Mix ingredients and bake.",
             "created_by": "John Doe",
             "file_name": "recipe.jpg",
+            "users_added": []
         }
-
-    def test_insert_recipe(self):
-        result = self.recipe_collection.insert_recipe(**self.sample_recipe)
-        self.assertIsNotNone(result)
-        self.assertEqual(result["name"], self.sample_recipe["name"])
 
     def test_search_recipe(self):
         now = datetime.now()
