@@ -123,16 +123,15 @@ class MongoDBRecipeCollection:
         for recipe_id in recipe_ids:
             
             recipe = self.food_collection.find_one({"id": recipe_id})
-            print(recipe)
             recipe_data = {
-                'id': recipe['id'],
-                'name': recipe['name'],
-                'recipe': recipe['recipe'],
-                'created_by': recipe["created_by"],
-                'created_on': recipe["created_on"], 
-                'link': recipe['link'],
-                'users_added': recipe['users_added'],
-                'file_name': recipe['file_name']
+                'id': recipe['id'] if 'id' in recipe.keys() else "",
+                'name': recipe['name'] if 'name' in recipe.keys() else "",
+                'recipe': recipe['recipe'] if 'recipe' in recipe.keys() else "",
+                'created_by': recipe["created_by"] if 'created_by' in recipe.keys() else "",
+                'created_on': recipe["created_on"] if 'created_on' in recipe.keys() else "", 
+                'link': recipe['link'] if 'link' in recipe.keys() else "",
+                'users_added': recipe['users_added'] if 'users_added' in recipe.keys() else [],
+                'file_name': recipe['file_name'] if 'file_name' in recipe.keys() else ""
             }
             recipes.append(recipe_data)
         
@@ -151,14 +150,14 @@ class MongoDBRecipeCollection:
         recipes = []
         for match in matches:
             recipe_data = {
-                'id': match['id'],
-                'name': match['name'],
-                'recipe': match['recipe'],
-                'created_by': match["created_by"],
-                'created_on': match["created_on"], 
-                'link': match['link'],
-                'users_added': match['users_added'],
-                'file_name': match['file_name']
+                'id': match['id'] if 'id' in match.keys() else "",
+                'name': match['name'] if 'name' in match.keys() else "",
+                'recipe': match['recipe'] if 'recipe' in match.keys() else "",
+                'created_by': match["created_by"] if 'created_by' in match.keys() else "",
+                'created_on': match["created_on"] if 'created_on' in match.keys() else "", 
+                'link': match['link'] if 'link' in match.keys() else "",
+                'users_added': match['users_added'] if 'users_added' in match.keys() else [],
+                'file_name': match['file_name'] if 'file_name' in match.keys() else ""
             }
             recipes.append(recipe_data)
 

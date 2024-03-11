@@ -260,16 +260,17 @@ class RecipeSearch(Resource):
         args = request.args
         recipe_id = args.get("recipe_id", "")
         recipe = current_app.mongodb_recipe.get_recipe_by_id(recipe_id)
-        return {
-            "id": recipe["id"],
-            "name": recipe["name"],
-            "recipe": recipe["recipe"],
-            "link": recipe["link"],
-            "created_by": recipe["created_by"],
-            "created_on": recipe["created_on"],
-            "users_added": recipe["users_added"],
-            "file_name": recipe["file_name"]
+        recipe_data = {
+            'id': recipe['id'] if 'id' in recipe.keys() else "",
+            'name': recipe['name'] if 'name' in recipe.keys() else "",
+            'recipe': recipe['recipe'] if 'recipe' in recipe.keys() else "",
+            'created_by': recipe["created_by"] if 'created_by' in recipe.keys() else "",
+            'created_on': recipe["created_on"] if 'created_on' in recipe.keys() else "", 
+            'link': recipe['link'] if 'link' in recipe.keys() else "",
+            'users_added': recipe['users_added'] if 'users_added' in recipe.keys() else [],
+            'file_name': recipe['file_name'] if 'file_name' in recipe.keys() else ""
         }
+        return recipe_data
 
 
 from werkzeug.datastructures import FileStorage
