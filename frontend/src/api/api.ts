@@ -80,9 +80,6 @@ export async function getImage(recipeId: string) : Promise<any> {
         },
     )
     
-    if (response.status !== 200) {
-        throw new Error(response.statusText);
-    }
     return response.data;
 }
 
