@@ -78,9 +78,12 @@ export default function UploadImagePage() {
                             </label>
                         )}
                         {uploadedFile && (
-                            <div className="flex items-center justify-between w-full max-w-sm p-2 text-gray-700 border-2 border-gray-300 rounded-lg">
-                                {uploadedFile.name}
-                                <button onClick={handleDeleteFile}>X</button>
+                            <div className="flex flex-col gap-3 w-full items-center">
+                                <div className="flex items-center justify-between w-full max-w-sm p-2 text-gray-700 border-2 border-gray-300 rounded-lg">
+                                    {uploadedFile.name}
+                                    <button onClick={handleDeleteFile}>X</button>
+                                </div>
+                                <img src={URL.createObjectURL(uploadedFile)} alt="Uploaded file" className="w-[300px] max-w-sm" />
                             </div>
                         )}
                         <button
