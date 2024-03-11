@@ -139,21 +139,34 @@ export async function searchUsers(searchText: (string|null)) : Promise<dbUser[]>
 }
 
 
-export async function uploadImage(file: File): Promise<string> {
+type UploadImageResponse = {
+    message: string;
+    id: string;
+    filename: string;
+    name: string;
+    recipe: string;
+};
+
+export async function uploadImage(file: File, userId: string): Promise<UploadImageResponse> {
     const formData = new FormData();
     formData.append("file", file);
 
-    const response = await api.post<{ message: string }>("/upload", formData, {
-        headers: {
-            "Content-Type": "multipart/form-data",
-        },
-    });
+    const response = await api
+        .post<UploadImageResponse>("/upload_image", formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+            params: {
+                user_id: userId,
+            },
+        })
+        .catch((error) => error.response);
 
     if (response.status !== 200) {
         throw new Error(response.data.message);
     }
 
-    return response.data.message;
+    return response.data;
 }
 
 type SignUpResponse = {

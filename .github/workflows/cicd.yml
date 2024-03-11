@@ -33,6 +33,8 @@ jobs:
 
     # Run your unit tests
     - name: Run Tests
+      env:
+        MONGO_URI: ${{ secrets.MONGO_URI }}
       run: pytest
       working-directory: backend/app/tests
 
