@@ -267,7 +267,8 @@ class RecipeSearch(Resource):
             "link": recipe["link"],
             "created_by": recipe["created_by"],
             "created_on": recipe["created_on"],
-            "users_added": recipe["users_added"]
+            "users_added": recipe["users_added"],
+            "file_name": recipe["file_name"]
         }
 
 

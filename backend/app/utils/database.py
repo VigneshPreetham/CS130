@@ -14,6 +14,8 @@ class MongoDBUserCollection:
         self.mongo = mongo
         self.db = self.mongo.cx['savor']
         self.users_collection = self.db['users']
+        self.food_collection = self.db['food']
+
     
     def email_exists(self, email):
         user = self.users_collection.find_one({"email": email})
