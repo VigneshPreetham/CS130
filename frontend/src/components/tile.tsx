@@ -35,10 +35,10 @@ export function Tile({index, id, isUser, name}: TileProps){
             setPic(profilePic);
         } else {
             getImage(id).then((r) => setPic(URL.createObjectURL(r)))
+            getRecipe(id).then((r) => {
+                setRecipe(r)
+            })
         }
-        getRecipe(id).then((r) => {
-            setRecipe(r)
-        })
     }, [reload])
 
     return (
