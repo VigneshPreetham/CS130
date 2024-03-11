@@ -10,10 +10,16 @@ from app import create_app  # Adjust the import path to match your project struc
 @pytest.fixture
 def app():
     # Load the application with test configuration
+    mongo_uri = os.environ.get("MONGO_URI")
+    
+    if mongo_uri:
+        # If MONGO_URI is set, update the app config before creating the app
+        test_app.config.update({"MONGO_URI": mongo_uri})
+    
     test_app = create_app()
+    yield test_app
     
    
-    yield test_app
 
 @pytest.fixture
 def client(app):
