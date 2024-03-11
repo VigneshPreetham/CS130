@@ -135,6 +135,33 @@ class AddRecipe(Resource):
             "user_id": user_id,
             "recipes": user_recipes,
         }, 200
+    
+remove_recipe_parser = api.parser()
+remove_recipe_parser.add_argument(
+    'user_id', type=str, required=True, help='User to remove recipe from', location='args'
+)
+remove_recipe_parser.add_argument(
+    'recipe_id', type=str, required=True, help='Recipe to remove', location='args'
+)
+@ns.route('remove_recipe')
+class RemoveRecipe(Resource):
+    @api.doc('remove_recipe', parser=remove_recipe_parser)
+    def post(self):
+        args = remove_recipe_parser.parse_args()
+        recipe_id = args['recipe_id']
+        user_id = args['user_id']
+        user_recipes = current_app.mongodb_recipe.get_recipes(user_id)
+        if recipe_id not in [recipe['id'] for recipe in user_recipes]:
+            return {"message": "User does not have this recipe"}
+
+        result = current_app.mongodb_user.remove_recipe_from_user(user_id, recipe_id)
+        user_recipes = current_app.mongodb_recipe.get_recipes(user_id)
+
+        return {
+            "message": "Recipe removed from User successfully", 
+            "user_id": user_id, 
+            "recipes": user_recipes
+        }, 200   
 
 
 @ns.route("/signup")
@@ -240,6 +267,7 @@ class RecipeSearch(Resource):
             "link": recipe["link"],
             "created_by": recipe["created_by"],
             "created_on": recipe["created_on"],
+            "users_added": recipe["users_added"]
         }
 
 

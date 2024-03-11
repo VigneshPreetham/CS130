@@ -61,6 +61,32 @@ class MongoDBUserCollection:
     
         return result
     
+    def add_recipe_to_user(self, user_id, recipe_id):
+        user_query = {"id": user_id}
+        user_update = { "$push" : { "recipes" : recipe_id} }
+
+        result = self.users_collection.update_one(user_query, user_update)
+
+        recipe_query = {"id": recipe_id}
+        recipe_update = { "$push" : { "users_added" : user_id} }
+
+        self.food_collection.update_one(recipe_query, recipe_update)
+
+        return result
+
+    def remove_recipe_from_user(self, user_id, recipe_id):
+        user_query = {"id": user_id}
+        user_update = { "$pull" : { "recipes" : recipe_id} }
+
+        result = self.users_collection.update_one(user_query, user_update)
+
+        recipe_query = {"id": recipe_id}
+        recipe_update = { "$pull" : { "users_added" : user_id} }
+
+        self.food_collection.update_one(recipe_query, recipe_update)
+
+        return result
+    
     def get_username(self, user_id):
         return self.users_collection.find_one({"id": user_id})
 
@@ -77,7 +103,8 @@ class MongoDBRecipeCollection:
         now = datetime.now()
         formatted_now = now.strftime("%Y-%m-%d %H:%M:%S")
         recipe_id = str(uuid.uuid4())
-        self.food_collection.insert_one({"id": recipe_id, "link": link, "file_name": file_name, "name": name,  "recipe": recipe, "created_by": created_by,  "created_on": formatted_now })
+        users_added = []
+        self.food_collection.insert_one({"id": recipe_id, "link": link, "file_name": file_name, "name": name,  "recipe": recipe, "created_by": created_by,  "created_on": formatted_now, "users_added": users_added})
         recipe = self.food_collection.find_one({"id": recipe_id})
 
         return recipe
@@ -101,7 +128,9 @@ class MongoDBRecipeCollection:
                 'recipe': recipe['recipe'],
                 'created_by': recipe["created_by"],
                 'created_on': recipe["created_on"], 
-                'link': recipe['link']
+                'link': recipe['link'],
+                'users_added': recipe['users_added'],
+                'file_name': recipe['file_name']
             }
             recipes.append(recipe_data)
         
@@ -125,7 +154,9 @@ class MongoDBRecipeCollection:
                 'recipe': match['recipe'],
                 'created_by': match["created_by"],
                 'created_on': match["created_on"], 
-                'link': match['link']
+                'link': match['link'],
+                'users_added': match['users_added'],
+                'file_name': match['file_name']
             }
             recipes.append(recipe_data)
 
