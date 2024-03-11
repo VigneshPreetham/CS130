@@ -127,7 +127,7 @@ class MongoDBRecipeCollection:
                 'created_on': match["created_on"], 
                 'link': match['link']
             }
-        recipes.append(recipe_data)
+            recipes.append(recipe_data)
 
         return recipes
 

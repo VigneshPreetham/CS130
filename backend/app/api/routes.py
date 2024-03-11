@@ -167,7 +167,7 @@ class RecipeSearch(Resource):
         args = request.args
         recipe_id = args.get("recipe_id", "")
         recipe = current_app.mongodb_recipe.get_recipe_by_id(recipe_id)
-        return {"recipe_id" : recipe['id'], "name": recipe['name'], "recipe": recipe['recipe'], "link": recipe['link'], "created_by": recipe['created_by']}
+        return {"id" : recipe['id'], "name": recipe['name'], "recipe": recipe['recipe'], "link": recipe['link'], "created_by": recipe['created_by'], "created_on": recipe['created_on']}
 
 
     
