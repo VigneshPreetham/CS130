@@ -1,44 +1,37 @@
-import logo from '../assets/logo.png'
 import { useEffect, useState } from 'react';
 import { TileList, SingleObject } from '../components/tileList';
 import { useSearchParams } from 'react-router-dom';
-import { searchRecipes } from '../api/api';
-
- interface User {
-    name: string,
-    id: string,
-}
-
-
-let recipes: SingleObject[] = [
-    {id: "1", name: "Pizza", pic: logo},
-    {id: "2", name: "Pasta", pic: logo},
-    {id: "3", name: "Gourmet Salad", pic: logo},
-    {id: "4", name: "Human Flesh", pic: logo},
-    
-]
-
-let users: SingleObject[] = [
-    {id: "1", name: "Zack", pic: logo},
-    {id: "2", name: "Sam", pic: logo},
-    {id: "3", name: "Luca", pic: logo},
-
-]
+import { searchRecipes, searchUsers } from '../api/api';
 
 
 export default function SearchResultsPage() {
     const [showUsers, setShowUser] = useState<boolean>(false)
-    //const [users, setUsers] = useState<SingleObject[]>([])
-    //const [recipes, setRecipes] = useState<SingleObject[]>()
+    const [users, setUsers] = useState<SingleObject[]>([])
+    const [recipes, setRecipes] = useState<SingleObject[]>([])
     const [searchParams, setSearchParams] = useSearchParams()
 
 
     useEffect(() =>{
         searchRecipes(searchParams.get("searchText")).then(result => {
-                
+                setRecipes(result.map((r) => {
+                    return {
+                        name: r.name,
+                        id: r.id,
+                        link: r.link
+                    }}
+                ))
             }
         );
-    })
+        searchUsers(searchParams.get("searchText")).then(result => {
+            setUsers(result.map((r) => {
+                return {
+                    name: r.username,
+                    id: r.user_id,
+                    link: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                }}
+            ))
+        });
+    }, [searchParams])
 
 
 

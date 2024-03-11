@@ -20,7 +20,7 @@ function App() {
                     {loggedIn ? (
                         <>
                             <Route path="/upload" element={<UploadImagePage />} />
-                            <Route path="/recipe/:id" element={<PicAndRecipe exampleParam={"2"} />} />
+                            <Route path="/recipe/:id" element={<PicAndRecipe />} />
                             <Route path="/user/:id/recipes" element={<UserRecipesPage />} />
                             <Route path='/results' element={<SearchResultsPage />} />
                             <Route path="*" element={<Navigate replace to="/upload" />} />
@@ -30,7 +30,7 @@ function App() {
                             <Route path="/sign-in" element={<SignInPage />} />
                             <Route path="/sign-up" element={<SignUpPage />} />
                             <Route path='/results' element={<SearchResultsPage />} />
-                            <Route path="/recipe/:id" element={<PicAndRecipe exampleParam={"2"} />} />
+                            <Route path="/recipe/:id" element={<PicAndRecipe />} />
                             <Route path="/user/:id/recipes" element={<UserRecipesPage />} />
                             <Route path="*" element={<Navigate replace to="/sign-in" />} />
                         </>

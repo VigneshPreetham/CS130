@@ -4,7 +4,7 @@ import { Tile } from './tile';
 export interface SingleObject {
     name: string,
     id: string,
-    pic: any,
+    link: any,
 }
 
 
@@ -18,7 +18,7 @@ export function TileList({toList, isUser}: TileListProps){
     return (
         <div>
             {toList.map((recipe, i) => 
-                <Tile isUser={isUser} index={i+1} name={recipe.name} id={recipe.id} pic={recipe.pic}/>
+                <Tile isUser={isUser} index={i+1} name={recipe.name} id={recipe.id} link={recipe.link}/>
             )}
         </div>
     )

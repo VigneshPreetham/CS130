@@ -2,20 +2,111 @@ import axios from "axios";
 import { SingleObject } from "../components/tileList";
 
 export const api = axios.create({
-    baseURL: "http://127.0.0.1:5000/api",
+    baseURL: "http://snap-backend.fly.dev/api",
 });
 
-export async function getRecipes(userId: string) : Promise<SingleObject[]>{
-    const response = await api.get<{ message: string }>(
+export interface dbRecipe {
+    created_by : string,
+    created_on : string,
+    id : string,
+    link: string,
+    name: string,
+    recipe : string
+}
+
+export interface dbUser {
+    email: string,
+    username: string,
+    recipes: dbRecipe[],
+    user_id: string
+}
+
+export async function getUserName(userId: string) : Promise<string> {
+    const response = await api.get<{ recipes: dbRecipe[], username: string }>(
         "/user_info", 
         {params: {"user_id": userId}}
     )
-    console.log(response)
-    return [];
+
+    if (response.status !== 200) {
+        throw new Error(response.statusText);
+    }
+    return response.data.username;
 }
 
-export async function searchRecipes(searchText: (string|null)) : Promise<SingleObject[]>{
-    return [];
+export async function getRecipes(userId: string) : Promise<dbRecipe[]> {
+    const response = await api.get<{ recipes: dbRecipe[], username: string }>(
+        "/user_info", 
+        {params: {"user_id": userId}}
+    )
+    
+    if (response.status !== 200) {
+        throw new Error(response.statusText);
+    }
+    return response.data.recipes;
+}
+
+export async function getRecipe(recipeId: string) : Promise<dbRecipe> {
+    const response = await api.get<{
+        recipe_id: string,
+        name: string,
+        recipe: string,
+        link: string,
+        created_by: string
+    }>(
+        "/recipe_info", 
+        {params: {"recipe_id": recipeId}}
+    )
+    
+    if (response.status !== 200) {
+        throw new Error(response.statusText);
+    }
+
+    return {
+        created_by : response.data.created_by,
+        created_on : "",
+        id : response.data.recipe_id,
+        link: response.data.link,
+        name: response.data.name,
+        recipe : response.data.recipe
+    };
+}
+
+export async function addRecipeToUser(userId: string, recipeId: string) : Promise<string> {
+    const response = await api.post<{ message: string }>(
+        "/add_recipe", 
+        {params: {
+            "user_id": userId, 
+            "recipe_id": recipeId
+        }}
+    )
+    if (response.status !== 200) {
+        throw new Error(response.data.message);
+    }
+    return response.data.message;
+}
+
+export async function searchRecipes(searchText: (string|null)) : Promise<dbRecipe[]>{
+    const response = await api.get<{ recipes: dbRecipe[]}>(
+        "/search_recipe", 
+        {params: {"recipe": searchText}}
+    )
+    
+    if (response.status !== 200) {
+        throw new Error(response.statusText);
+    }
+    return response.data.recipes;
+}
+
+export async function searchUsers(searchText: (string|null)) : Promise<dbUser[]>{
+    const response = await api.get<{ users: dbUser[]}>(
+        "/search_username", 
+        {params: {"username": searchText}}
+    )
+    
+    if (response.status !== 200) {
+        throw new Error(response.statusText);
+    }
+    return response.data.users;
 }
 
 

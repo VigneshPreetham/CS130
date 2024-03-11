@@ -1,36 +1,34 @@
 import logo from '../assets/logo.png';
 import { useParams } from "react-router-dom";
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { dbRecipe, getRecipe } from '../api/api';
 
 
-interface PicAndRecipePrps {
-    exampleParam: string;
-}
-
-interface PicAndRecipe {
-    name: string;
-    picture: string;
-    recipe: string[];
-}
-
-let pizzaPocket: PicAndRecipe = {
+let pizzaPocket: dbRecipe = {
     name: "Pizza Pocket",
-    picture: "idk",
-    recipe: ["Take out of box", "Microwave"],
+    link: "",
+    id: "",
+    recipe: "",
+    created_by: "",
+    created_on: ""
 };
 
-export default function PicAndRecipe({ exampleParam }: PicAndRecipePrps) {
+export default function PicAndRecipe() {
     let { id } = useParams();
+    const [recipe, setRecipe] = useState<dbRecipe>(pizzaPocket)
+
+    useEffect(() =>{
+        const recipeId = id == undefined ? "" : id
+        getRecipe(recipeId).then((r) => setRecipe(r))
+    }, [])
 
     return (
         <div className="h-screen w-screen flex justify-center bg-gray-50">
             <div className="bg-slate-200 border-2 items-center rounded-lg border-black w-3/4 h-fit h-rounded-lg flex flex-col m-5 lg:px-8">
-                <div className="m-2 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900"> {pizzaPocket.name} </div>
-                <img src={logo} alt="test" className="m-4 w-[400px]" />
+                <div className="m-2 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900"> {recipe.name} </div>
+                <img src={recipe.link} alt="test" className="m-4 w-[400px]" />
                 <div className="list-decimal m-2">
-                    {pizzaPocket.recipe.map((line) => (
-                        <li> {line} </li>
-                    ))}
+                    {recipe.recipe}
                 </div>
             </div>
         </div>
