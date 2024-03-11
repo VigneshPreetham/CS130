@@ -9,9 +9,9 @@ export interface dbRecipe {
     created_by : string,
     created_on : string,
     id : string,
-    link: string,
     name: string,
-    recipe : string
+    recipe : string,
+    users_added: string[]
 }
 
 export interface dbUser {
@@ -50,8 +50,8 @@ export async function getRecipe(recipeId: string) : Promise<dbRecipe> {
         recipe_id: string,
         name: string,
         recipe: string,
-        link: string,
         created_by: string
+        users_added: string[]
     }>(
         "/recipe_info", 
         {params: {"recipe_id": recipeId}}
@@ -65,15 +65,44 @@ export async function getRecipe(recipeId: string) : Promise<dbRecipe> {
         created_by : response.data.created_by,
         created_on : "",
         id : response.data.recipe_id,
-        link: response.data.link,
         name: response.data.name,
-        recipe : response.data.recipe
+        recipe : response.data.recipe,
+        users_added: response.data.users_added
     };
+}
+
+export async function getImage(recipeId: string) : Promise<any> {
+    const response = await api.get<{}>(
+        "/get_image", 
+        {
+            params: {"recipe_id": recipeId}, 
+            responseType: 'blob'
+        },
+    )
+    
+    if (response.status !== 200) {
+        throw new Error(response.statusText);
+    }
+    return response.data;
 }
 
 export async function addRecipeToUser(userId: string, recipeId: string) : Promise<string> {
     const response = await api.post<{ message: string }>(
-        "/add_recipe", 
+        "/add_recipe", null,
+        {params: {
+            "user_id": userId, 
+            "recipe_id": recipeId
+        }}
+    )
+    if (response.status !== 200) {
+        throw new Error(response.data.message);
+    }
+    return response.data.message;
+}
+
+export async function removeRecipeFromUser(userId: string, recipeId: string) : Promise<string> {
+    const response = await api.post<{ message: string }>(
+        "/remove_recipe", null,
         {params: {
             "user_id": userId, 
             "recipe_id": recipeId

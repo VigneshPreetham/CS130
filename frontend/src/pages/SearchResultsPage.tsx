@@ -2,9 +2,13 @@ import { useEffect, useState } from 'react';
 import { TileList, SingleObject } from '../components/tileList';
 import { useSearchParams } from 'react-router-dom';
 import { searchRecipes, searchUsers } from '../api/api';
+import { useUser } from '../hooks/useUser';
 
 
 export default function SearchResultsPage() {
+
+    const user = useUser();
+
     const [showUsers, setShowUser] = useState<boolean>(false)
     const [users, setUsers] = useState<SingleObject[]>([])
     const [recipes, setRecipes] = useState<SingleObject[]>([])
@@ -12,12 +16,13 @@ export default function SearchResultsPage() {
 
 
     useEffect(() =>{
+        console.log(user)
         searchRecipes(searchParams.get("searchText")).then(result => {
                 setRecipes(result.map((r) => {
                     return {
                         name: r.name,
                         id: r.id,
-                        link: r.link
+                        usersAdded: r.users_added,
                     }}
                 ))
             }
@@ -27,7 +32,7 @@ export default function SearchResultsPage() {
                 return {
                     name: r.username,
                     id: r.user_id,
-                    link: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                    usersAdded: []
                 }}
             ))
         });
