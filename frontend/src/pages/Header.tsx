@@ -5,7 +5,7 @@ import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 
 import logo from "../assets/logo.png";
-import React from 'react';
+import React from "react";
 import SearchBar from "../components/searchBar";
 import { Link } from "react-router-dom";
 
@@ -50,6 +50,16 @@ function Dropdown() {
                         <Menu.Item>
                             {({ active }) => (
                                 <Link
+                                    to={`/upload`}
+                                    className={classNames(active ? "bg-gray-100 text-gray-900" : "text-gray-700", "block px-4 py-2 text-sm")}
+                                >
+                                    Upload Image
+                                </Link>
+                            )}
+                        </Menu.Item>
+                        <Menu.Item>
+                            {({ active }) => (
+                                <Link
                                     to={`/user/${userId}/recipes`}
                                     className={classNames(active ? "bg-gray-100 text-gray-900" : "text-gray-700", "block px-4 py-2 text-sm")}
                                 >
@@ -91,7 +101,7 @@ export default function Header() {
             {loggedIn && (
                 <div className="RIGHT flex gap-5">
                     <div className="flex place-items-center">
-                         <SearchBar/>
+                        <SearchBar />
                     </div>
                     <Dropdown />
                 </div>
