@@ -24,7 +24,7 @@ export default function UserRecipesPage() {
                 ))
             }
         );
-    }, [])
+    }, [id])
 
 
     return (
