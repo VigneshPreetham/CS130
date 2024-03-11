@@ -1,8 +1,8 @@
 import { useState } from "react";
-import React from 'react';
-
 
 import { signUp } from "../../api/api";
+import { useUser } from "../../hooks/useUser";
+import { Link } from "react-router-dom";
 
 export default function SignUpPage() {
     const [email, setEmail] = useState("");
@@ -11,11 +11,19 @@ export default function SignUpPage() {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
 
+    const { login } = useUser();
+
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
+        if (password !== confirmPassword) {
+            setErrorMessage("Passwords do not match.");
+            return;
+        }
+
         try {
             const user = await signUp(email, userName, password);
+            login(user.username, user.email, user.user_id);
         } catch (error) {
             if (error instanceof Error) {
                 setErrorMessage(error.message);
@@ -116,6 +124,12 @@ export default function SignUpPage() {
                         </div>
                     </form>
                 </div>
+                <span className="w-full mt-3 text-center">
+                    Already have an account?{" "}
+                    <Link to="/sign-in" className="text-logo-red font-bold">
+                        Sign In
+                    </Link>
+                </span>
             </div>
         </div>
     );

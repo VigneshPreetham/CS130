@@ -115,7 +115,7 @@ class Signup(Resource):
         if result is not None:
             return {"email": result["email"], "username": result["username"], "recipes": result['recipes'], "user_id": result["id"], "error": ""}, 200
         else:
-            return {"email": "", "username": "", "error": "User failed to signup"}, 400
+            return {"email": "", "username": "", "error": "Email already exists, please try again with another email"}, 400
 
 @ns.route('/login')
 class Login(Resource):
@@ -167,7 +167,7 @@ class RecipeSearch(Resource):
         args = request.args
         recipe_id = args.get("recipe_id", "")
         recipe = current_app.mongodb_recipe.get_recipe_by_id(recipe_id)
-        return {"recipe_id" : recipe['id'], "name": recipe['name'], "recipe": recipe['recipe'], "link": recipe['link'], "created_by": recipe['created_by']}
+        return {"id" : recipe['id'], "name": recipe['name'], "recipe": recipe['recipe'], "link": recipe['link'], "created_by": recipe['created_by'], "created_on": recipe['created_on']}
 
 
     

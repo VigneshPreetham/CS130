@@ -127,20 +127,21 @@ export async function uploadImage(file: File): Promise<string> {
     return response.data.message;
 }
 
-export async function signUp(
-    email: string,
-    userName: string,
-    password: string
-): Promise<{
+type SignUpResponse = {
     email: string;
+    user_id: string;
     username: string;
-}> {
+    recipes: string[];
+    error: string;
+};
+
+export async function signUp(email: string, userName: string, password: string): Promise<SignUpResponse> {
     const response = await api
-        .post<{ message: string }>(
+        .post<SignUpResponse>(
             "/signup",
             JSON.stringify({
                 email,
-                userName,
+                username: userName,
                 password,
             }),
             {
@@ -149,30 +150,28 @@ export async function signUp(
                 },
             }
         )
-        .catch((error) => {
-            console.log(error);
-            return error.response.data;
-        });
+        .catch((error) => error.response);
 
-    if (response.error) {
-        throw new Error(response.error);
+    console.log(response);
+
+    if (response.data.error) {
+        throw new Error(response.data.error);
     }
 
-    return {
-        email: response.data.email,
-        username: response.data.username,
-    };
+    return response.data;
 }
 
-export async function signIn(
-    email: string,
-    password: string
-): Promise<{
+type SignInResponse = {
     email: string;
+    user_id: string;
     username: string;
-}> {
+    recipes: string[];
+    error: string;
+};
+
+export async function signIn(email: string, password: string): Promise<SignInResponse> {
     const response = await api
-        .post<{ email: string; username: string; error: string }>(
+        .post<SignInResponse>(
             "/login",
             JSON.stringify({
                 email,
@@ -184,17 +183,11 @@ export async function signIn(
                 },
             }
         )
-        .catch((error) => {
-            return error.response.data;
-        });
+        .catch((error) => error.response);
 
-    if (response.error) {
-        console.log(response.error);
-        throw new Error(response.error);
+    if (response.data.error) {
+        throw new Error(response.data.error);
     }
 
-    return {
-        email: response.data.email,
-        username: response.data.username,
-    };
+    return response.data;
 }
