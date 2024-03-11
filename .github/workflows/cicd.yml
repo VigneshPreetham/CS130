@@ -33,7 +33,7 @@ jobs:
 
     # Run your unit tests
     - name: Run Tests
-      run: python -m unittest discover
+      run: pytest
       working-directory: backend/app/tests
 
 

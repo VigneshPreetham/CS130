@@ -232,19 +232,3 @@ class GetImage(Resource):
        
         except Exception as e:
             return str(e), 404
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
