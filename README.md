@@ -1,3 +1,23 @@
+# Deployment Instructions
+
+### Frontend
+1. Go to the frontend folder
+2. Run `npm install`
+3. Run `npm build`
+4. Upload the build folder to the s3 bucket https://s3.console.aws.amazon.com/s3/buckets/cs130-app-frontend?region=us-west-1&bucketType=general&tab=objects
+
+### Backend
+1. Go to the backend folder
+2. Run `pip install -r requirements.txt`
+3. Need a .env file with the following keys- `MONGO_URI, OPEN_API_KEY, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY`
+4. python run.py
+
+Alternatively, the backend is still being hosted at the following link
+https://snap-backend.fly.dev/api/
+
+Individual endpoints can be accessed via running the frontend pointing the base_url to the fly.io link above. Depending on when this is read, the fly.io deployment above may/may not be working anymore since servers are being funded out of pocket as of now.
+
+
 # Repository Template
 
 [![Build Status](https://app.travis-ci.com/melaasar/cs130-template.svg?branch=master)](https://app.travis-ci.com/github/melaasar/cs130-template)
